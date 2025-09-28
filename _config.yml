@@ -1,0 +1,42 @@
+title: "Farida A. Wada"
+tagline: "Executive Leadership & Innovation Strategist"
+description: >-
+  A polished personal site for highlighting executive leadership experience,
+  board service readiness, and thought leadership on digital transformation.
+url: "https://fawadafr.github.io"
+baseurl: ""
+
+# Theme & appearance
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+minima:
+  skin: classic
+  social_links:
+    - platform: linkedin
+      user_url: https://www.linkedin.com/in/faridawada
+    - platform: twitter
+      user_url: https://twitter.com/farida_wada
+    - platform: medium
+      user_url: https://medium.com/@faridawada
+
+author:
+  name: "Farida A. Wada"
+  email: "connect@faridawada.com"
+  location: "Lagos, Nigeria"
+  role: "Chief Strategy Officer"
+  availability: "Open to global board opportunities"
+
+header_pages:
+  - about.md
+  - leadership-portfolio.md
+  - speaking.md
+  - insights.md
+  - contact.md
+
+collections:
+  speaking:
+    output: true
+    permalink: /speaking/:name/
