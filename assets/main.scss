@@ -1,23 +1,20 @@
 ---
-# Minimalist CTO Website - Anthropic-inspired Typography System
+# Minimalist CTO Website - Anthropic Typography - Standalone CSS
 ---
 
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
 
-/* ============================================
-   CSS RESET & BASE OVERRIDES
-   ============================================ */
+/* Complete standalone CSS for minima theme override */
+
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ============================================
-   DESIGN TOKENS / CSS VARIABLES
-   ============================================ */
+/* Design Tokens */
 :root {
-  /* Colors - Light Mode */
   --color-bg: #FAFAFA;
   --color-surface: #FFFFFF;
   --color-text-primary: #1A1A1A;
@@ -28,36 +25,23 @@
   --color-tag-bg: #E5E7EB;
   --color-tag-text: #4B5563;
   --color-tag-hover-bg: #D1D5DB;
-
-  /* Typography - Anthropic System with Fira Code */
+  
   --font-primary: 'Fira Code', 'SF Mono', 'Monaco', 'Courier New', monospace;
-  --font-heading: 'Fira Code', 'SF Mono', 'Monaco', 'Courier New', monospace;
-  --font-body: 'Fira Code', 'SF Mono', 'Monaco', 'Courier New', monospace;
-  --font-code: 'Fira Code', 'SF Mono', 'Monaco', 'Courier New', monospace;
-
-  /* Fluid Typography Scale - Anthropic's clamp() system */
+  
   --text-detail-xs: clamp(0.6875rem, 0.668rem + 0.082vw, 0.75rem);
   --text-para-s: clamp(1rem, 0.962rem + 0.163vw, 1.125rem);
   --text-para-m: clamp(1.125rem, 1.087rem + 0.163vw, 1.25rem);
   --text-para-l: clamp(1.375rem, 1.337rem + 0.163vw, 1.5rem);
-  --text-display-xs: clamp(1.125rem, 1.087rem + 0.163vw, 1.25rem);
   --text-display-s: clamp(1.25rem, 1.173rem + 0.327vw, 1.5rem);
   --text-display-m: clamp(1.75rem, 1.673rem + 0.327vw, 2rem);
   --text-display-l: clamp(2rem, 1.694rem + 1.306vw, 3rem);
   --text-display-xl: clamp(2.5rem, 2.041rem + 1.959vw, 4rem);
   --text-display-xxl: clamp(3rem, 2.388rem + 2.612vw, 5rem);
-
-  /* Font Weights - Anthropic simplified approach */
-  --font-normal: 400;
-  --font-medium: 500;
-
-  /* Line Heights - Anthropic optimized */
+  
   --leading-tight: 1.2;
   --leading-normal: 1.5;
   --leading-loose: 1.7;
-
-  /* Spacing - Anthropic's Fluid Grid System */
-  --space-1: 0.25rem;
+  
   --space-2: 0.5rem;
   --space-3: 0.75rem;
   --space-4: 1rem;
@@ -66,33 +50,11 @@
   --space-12: clamp(2.25rem, 2.020rem + 0.980vw, 3rem);
   --space-16: clamp(2.5rem, 2.041rem + 1.959vw, 4rem);
   --space-24: clamp(3rem, 2.388rem + 2.612vw, 5rem);
-
-  /* Site Margins - Responsive */
   --site-margin: clamp(2rem, 1.082rem + 3.918vw, 5rem);
-
-  /* Layout */
-  --content-width: 680px;
-  --wide-width: 1024px;
-  --header-height: 80px;
 }
 
-/* Dark Mode Variables */
-[data-theme="dark"] {
-  --color-bg: #0A0A0A;
-  --color-surface: #1A1A1A;
-  --color-text-primary: #E5E5E5;
-  --color-text-secondary: #9CA3AF;
-  --color-border: #2A2A2A;
-  --color-accent: #60A5FA;
-  --color-code-bg: #1F1F1F;
-  --color-tag-bg: #1F2937;
-  --color-tag-text: #9CA3AF;
-  --color-tag-hover-bg: #374151;
-}
-
-/* System preference default */
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root {
     --color-bg: #0A0A0A;
     --color-surface: #1A1A1A;
     --color-text-primary: #E5E5E5;
@@ -106,11 +68,9 @@
   }
 }
 
-/* ============================================
-   BASE TYPOGRAPHY OVERRIDES
-   ============================================ */
+/* Base Typography */
 body {
-  font-family: var(--font-body) !important;
+  font-family: var(--font-primary) !important;
   font-size: var(--text-para-m) !important;
   line-height: var(--leading-normal) !important;
   color: var(--color-text-primary) !important;
@@ -120,16 +80,15 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading) !important;
+  font-family: var(--font-primary) !important;
   line-height: var(--leading-tight) !important;
-  font-weight: var(--font-medium) !important;
+  font-weight: 500 !important;
   color: var(--color-text-primary) !important;
 }
 
 h1 { font-size: var(--text-display-xl) !important; }
 h2 { font-size: var(--text-display-l) !important; }
 h3 { font-size: var(--text-display-m) !important; }
-h4 { font-size: var(--text-display-s) !important; }
 
 p {
   line-height: var(--leading-loose) !important;
@@ -141,12 +100,10 @@ a {
   text-decoration: none;
 }
 
-a:hover {
-  text-decoration: underline;
-}
+a:hover { text-decoration: underline; }
 
 code {
-  font-family: var(--font-code) !important;
+  font-family: var(--font-primary) !important;
   font-size: 0.9em;
   background: var(--color-code-bg);
   padding: 0.2em 0.4em;
@@ -165,19 +122,17 @@ pre code {
   padding: 0;
 }
 
-/* ============================================
-   HEADER / NAVIGATION OVERRIDES
-   ============================================ */
+/* Header */
 .site-header {
   border-bottom: 1px solid var(--color-border) !important;
-  min-height: var(--header-height) !important;
+  min-height: 80px !important;
   background-color: var(--color-bg) !important;
 }
 
 .site-title {
-  font-family: var(--font-heading) !important;
+  font-family: var(--font-primary) !important;
   font-size: var(--text-display-s) !important;
-  font-weight: var(--font-medium) !important;
+  font-weight: 500 !important;
   color: var(--color-text-primary) !important;
 }
 
@@ -193,32 +148,24 @@ pre code {
   text-decoration: none !important;
 }
 
-/* ============================================
-   HERO SECTION
-   ============================================ */
+/* Hero */
 .hero {
-  max-width: var(--wide-width);
+  max-width: 1024px;
   margin: 0 auto;
   padding: var(--space-24) var(--site-margin);
   text-align: center;
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  color: var(--color-text-primary);
 }
 
 .hero h1 {
   font-size: var(--text-display-xxl);
   margin-bottom: var(--space-6);
-  font-weight: var(--font-medium);
-  color: var(--color-text-primary);
+  font-weight: 500;
 }
 
 .hero .subtitle {
   font-size: var(--text-para-l);
   color: var(--color-text-secondary);
   margin-bottom: var(--space-8);
-  line-height: var(--leading-normal);
   max-width: 60ch;
   margin-left: auto;
   margin-right: auto;
@@ -231,25 +178,20 @@ pre code {
   flex-wrap: wrap;
 }
 
-/* ============================================
-   CONTENT SECTIONS
-   ============================================ */
+/* Content Sections */
 .section {
-  max-width: var(--wide-width);
+  max-width: 1024px;
   margin: 0 auto var(--space-24);
   padding: 0 var(--site-margin);
 }
 
 .section-title {
-  font-family: var(--font-heading);
   font-size: var(--text-display-l);
   margin-bottom: var(--space-8);
   text-align: center;
 }
 
-/* ============================================
-   CONTENT GRID
-   ============================================ */
+/* Content Grid */
 .content-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -261,7 +203,6 @@ pre code {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   padding: var(--space-6);
-  transition: border-color 0.2s;
 }
 
 .content-card:hover {
@@ -273,14 +214,12 @@ pre code {
   color: var(--color-accent);
   margin-bottom: var(--space-3);
   display: block;
-  font-family: var(--font-code);
 }
 
 .card-title {
-  font-family: var(--font-heading);
   font-size: var(--text-display-s);
   margin-bottom: var(--space-4);
-  font-weight: var(--font-medium);
+  font-weight: 500;
 }
 
 .card-title a {
@@ -295,7 +234,6 @@ pre code {
 .card-excerpt {
   font-size: var(--text-para-m);
   color: var(--color-text-secondary);
-  line-height: var(--leading-normal);
   margin-bottom: var(--space-4);
 }
 
@@ -306,20 +244,15 @@ pre code {
   gap: var(--space-4);
 }
 
-/* ============================================
-   TAGS / HASHTAGS
-   ============================================ */
+/* Tags */
 .tag {
   display: inline-block;
-  padding: var(--space-1) var(--space-3);
+  padding: 0.25rem var(--space-3);
   background: var(--color-tag-bg);
   color: var(--color-tag-text);
   border-radius: 3px;
   font-size: var(--text-detail-xs);
-  font-family: var(--font-code);
-  letter-spacing: 0.02em;
   text-decoration: none;
-  transition: background-color 0.2s;
 }
 
 .tag:hover {
@@ -334,59 +267,7 @@ pre code {
   margin-bottom: var(--space-6);
 }
 
-/* ============================================
-   POST/ARTICLE LAYOUT
-   ============================================ */
-.post,
-.page-content {
-  max-width: var(--content-width);
-  margin: 0 auto;
-  padding: var(--space-16) var(--site-margin);
-}
-
-.post-header {
-  margin-bottom: var(--space-12);
-}
-
-.post-title {
-  font-size: var(--text-display-xl);
-  margin-bottom: var(--space-4);
-}
-
-.post-meta {
-  color: var(--color-text-secondary);
-  font-size: var(--text-para-s);
-  margin-bottom: var(--space-8);
-}
-
-.post-content {
-  font-size: var(--text-para-m);
-  line-height: var(--leading-loose);
-}
-
-.post-content h2 {
-  margin-top: var(--space-12);
-  margin-bottom: var(--space-6);
-}
-
-.post-content h3 {
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-4);
-}
-
-.post-content ul,
-.post-content ol {
-  margin-bottom: var(--space-6);
-  padding-left: var(--space-8);
-}
-
-.post-content li {
-  margin-bottom: var(--space-3);
-}
-
-/* ============================================
-   CASE STUDY CARD
-   ============================================ */
+/* Case Study Cards */
 .case-study-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
@@ -396,7 +277,6 @@ pre code {
 }
 
 .case-study-title {
-  font-family: var(--font-heading);
   font-size: var(--text-display-m);
   margin-bottom: var(--space-3);
 }
@@ -409,16 +289,14 @@ pre code {
 .case-study-link {
   color: var(--color-accent);
   font-size: var(--text-para-s);
-  font-weight: var(--font-medium);
+  font-weight: 500;
 }
 
 .case-study-link::before {
   content: "→ ";
 }
 
-/* ============================================
-   FOOTER OVERRIDES
-   ============================================ */
+/* Footer */
 .site-footer {
   border-top: 1px solid var(--color-border) !important;
   padding: var(--space-16) var(--site-margin) !important;
@@ -430,73 +308,22 @@ pre code {
   font-size: var(--text-para-s) !important;
 }
 
-/* ============================================
-   UTILITY OVERRIDES
-   ============================================ */
+/* Utility */
 .wrapper {
-  max-width: var(--wide-width) !important;
+  max-width: 1024px !important;
   padding-right: var(--site-margin) !important;
   padding-left: var(--site-margin) !important;
 }
 
-/* Remove old styles */
-.highlights,
-.focus-areas,
-.latest,
-.speaking {
-  margin: 0;
-  padding: 0;
+.page-content {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: var(--space-16) var(--site-margin);
 }
 
-.highlights ul,
-.speaking ul {
-  list-style: disc;
-  padding-left: var(--space-8);
-}
-
-.latest .cta,
-.hero .cta {
-  display: inline-block;
-  margin-top: var(--space-4);
-  padding: var(--space-3) var(--space-6);
-  background: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: var(--font-medium);
-  font-family: var(--font-body);
-}
-
-.latest .cta:hover,
-.hero .cta:hover {
-  background: var(--color-accent);
-  color: var(--color-surface);
-}
-
-.focus-areas .grid {
-  display: grid;
-  gap: var(--space-6);
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-}
-
-.focus-areas article {
-  border: 1px solid var(--color-border);
-  border-radius: 0;
-  padding: var(--space-6);
-  background: var(--color-surface);
-  box-shadow: none;
-}
-
-/* ============================================
-   RESPONSIVE
-   ============================================ */
+/* Responsive */
 @media (max-width: 768px) {
   .content-grid {
     grid-template-columns: 1fr;
-  }
-
-  .hero h1 {
-    font-size: var(--text-display-xl);
   }
 }
