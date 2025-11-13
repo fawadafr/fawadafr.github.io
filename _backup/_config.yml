@@ -1,0 +1,67 @@
+title: "John Doe"
+tagline: "Chief Technology Officer"
+description: >-
+  Building resilient systems and high-performing engineering teams.
+  CTO with 15+ years shipping distributed systems at scale.
+url: "https://fawadafr.github.io"
+baseurl: ""
+
+# Theme & appearance
+remote_theme: jekyll/minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+minima:
+  skin: classic
+  social_links:
+    - platform: linkedin
+      user_url: https://www.linkedin.com/in/johndoe
+    - platform: github
+      user_url: https://github.com/johndoe
+    - platform: twitter
+      user_url: https://twitter.com/johndoe
+
+author:
+  name: "John Doe"
+  email: "john@example.com"
+  location: "San Francisco, CA"
+  role: "Chief Technology Officer"
+  tagline: "Platform Engineering • Cloud Architecture • Engineering Culture"
+
+# Navigation
+header_pages:
+  - work.md
+  - writing.md
+  - speaking.md
+  - tags.md
+  - about.md
+
+# Collections
+collections:
+  case_studies:
+    output: true
+    permalink: /work/:slug/
+  speaking:
+    output: true
+    permalink: /speaking/:slug/
+
+# Defaults for front matter
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      permalink: /writing/:slug/
+  - scope:
+      path: ""
+      type: "case_studies"
+    values:
+      layout: "case-study"
+  - scope:
+      path: ""
+      type: "speaking"
+    values:
+      layout: "speaking"
