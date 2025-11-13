@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Doe - Chief Technology Officer</title>
+  <title>Migrating 500 Services to Kubernetes | John Doe</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -123,8 +123,8 @@
     }
 
     h1 { font-size: var(--text-display-xl); }
-    h2 { font-size: var(--text-display-l); margin-top: var(--space-8); }
-    h3 { font-size: var(--text-display-m); margin-top: var(--space-6); }
+    h2 { font-size: var(--text-display-l); margin-top: var(--space-12); }
+    h3 { font-size: var(--text-display-m); margin-top: var(--space-8); }
 
     p {
       margin-bottom: var(--space-6);
@@ -236,118 +236,6 @@
     [data-theme="dark"] .moon-icon { display: none; }
 
     /* ============================================
-       HERO SECTION
-       ============================================ */
-    .hero {
-      max-width: var(--wide-width);
-      margin: 0 auto;
-      padding: var(--space-24) var(--site-margin);
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: var(--text-display-xxl);
-      margin-bottom: var(--space-6);
-      font-weight: 500;
-    }
-
-    .hero .subtitle {
-      font-size: var(--text-para-l);
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-8);
-      line-height: var(--leading-normal);
-      max-width: 60ch;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-tags {
-      display: flex;
-      gap: var(--space-3);
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* ============================================
-       MAIN CONTENT AREA
-       ============================================ */
-    .main-content {
-      max-width: var(--wide-width);
-      margin: 0 auto;
-      padding: var(--space-16) var(--site-margin);
-    }
-
-    .section {
-      margin-bottom: var(--space-24);
-    }
-
-    .section-title {
-      font-family: var(--font-primary);
-      font-size: var(--text-display-l);
-      margin-bottom: var(--space-8);
-      text-align: center;
-    }
-
-    /* ============================================
-       CONTENT GRID
-       ============================================ */
-    .content-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: var(--space-6);
-      margin-bottom: var(--space-12);
-    }
-
-    .content-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      padding: var(--space-6);
-      transition: border-color 0.2s;
-    }
-
-    .content-card:hover {
-      border-color: var(--color-accent);
-    }
-
-    .card-tag {
-      font-size: var(--text-detail-xs);
-      color: var(--color-accent);
-      margin-bottom: var(--space-3);
-      display: block;
-      font-family: var(--font-primary);
-    }
-
-    .card-title {
-      font-family: var(--font-primary);
-      font-size: var(--text-display-s);
-      margin-bottom: var(--space-4);
-      font-weight: 500;
-    }
-
-    .card-title a {
-      color: var(--color-text-primary);
-    }
-
-    .card-title a:hover {
-      color: var(--color-accent);
-      text-decoration: none;
-    }
-
-    .card-excerpt {
-      font-size: var(--text-para-m);
-      color: var(--color-text-secondary);
-      line-height: var(--leading-normal);
-      margin-bottom: var(--space-4);
-    }
-
-    .card-meta {
-      font-size: var(--text-detail-xs);
-      color: var(--color-text-secondary);
-      display: flex;
-      gap: var(--space-4);
-    }
-
-    /* ============================================
        TAGS / HASHTAGS
        ============================================ */
     .tag {
@@ -372,39 +260,7 @@
       display: flex;
       gap: var(--space-2);
       flex-wrap: wrap;
-      margin-bottom: var(--space-6);
-    }
-
-    /* ============================================
-       CASE STUDY CARD
-       ============================================ */
-    .case-study-card {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-left: 4px solid var(--color-accent);
-      padding: var(--space-6);
-      margin-bottom: var(--space-6);
-    }
-
-    .case-study-title {
-      font-family: var(--font-primary);
-      font-size: var(--text-display-m);
-      margin-bottom: var(--space-3);
-    }
-
-    .case-study-description {
-      color: var(--color-text-secondary);
-      margin-bottom: var(--space-4);
-    }
-
-    .case-study-link {
-      color: var(--color-accent);
-      font-size: var(--text-para-s);
-      font-weight: 500;
-    }
-
-    .case-study-link::before {
-      content: "→ ";
+      margin-bottom: var(--space-8);
     }
 
     /* ============================================
@@ -454,6 +310,10 @@
 
     .article-content li {
       margin-bottom: var(--space-3);
+    }
+
+    .article-content strong {
+      font-weight: 500;
     }
 
     .article-footer {
@@ -510,15 +370,6 @@
         font-size: 0.75rem;
       }
 
-      .hero {
-        padding: var(--space-16) var(--space-6);
-      }
-
-      .content-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .main-content,
       .article-container {
         padding: var(--space-12) var(--space-6);
       }
@@ -540,11 +391,11 @@
     <div class="header-container">
       <a href="/" class="site-logo">john.doe</a>
       <nav class="site-nav">
-        <a href="#work" class="nav-link">work</a>
-        <a href="#writing" class="nav-link">writing</a>
-        <a href="#speaking" class="nav-link">speaking</a>
-        <a href="#tags" class="nav-link">#tags</a>
-        <a href="#about" class="nav-link">about</a>
+        <a href="/#work" class="nav-link">work</a>
+        <a href="/#writing" class="nav-link">writing</a>
+        <a href="/#speaking" class="nav-link">speaking</a>
+        <a href="/#tags" class="nav-link">#tags</a>
+        <a href="/#about" class="nav-link">about</a>
         <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
           <span class="sun-icon">☀</span>
           <span class="moon-icon">☾</span>
@@ -553,157 +404,249 @@
     </div>
   </header>
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h1>Building resilient systems and high-performing engineering teams</h1>
-    <p class="subtitle">
-      CTO with 15+ years shipping distributed systems at scale.
-      Focused on pragmatic architecture, developer experience, and sustainable growth.
-    </p>
-    <div class="hero-tags">
-      <a href="/tags/platform-engineering" class="tag">#platform-engineering</a>
-      <a href="/tags/engineering-culture" class="tag">#engineering-culture</a>
-      <a href="/tags/cloud-architecture" class="tag">#cloud-architecture</a>
+  <!-- ARTICLE CONTENT -->
+  <article class="article-container">
+    <header class="article-header">
+      <div class="tag-list">
+        <a href="/#tags/technical-deep-dive" class="tag">#technical-deep-dive</a>
+        <a href="/#tags/kubernetes" class="tag">#kubernetes</a>
+        <a href="/#tags/platform-engineering" class="tag">#platform-engineering</a>
+      </div>
+      <h1 class="article-title">Migrating 500 Services to Kubernetes</h1>
+      <div class="article-meta">
+        November 10, 2025 • 12 min read
+      </div>
+    </header>
+
+    <div class="article-content">
+      <p>
+        In early 2024, we faced a critical decision: continue managing our monolithic deployment infrastructure
+        or migrate 500+ microservices to Kubernetes. The existing system was straining under the weight of
+        explosive growth—10M+ daily active users, hundreds of deployments per day, and an infrastructure bill
+        that was growing faster than revenue.
+      </p>
+
+      <p>
+        This is the story of how we orchestrated a zero-downtime migration to Kubernetes over 9 months,
+        the hard lessons we learned, and the patterns that actually worked at scale.
+      </p>
+
+      <h2>The Challenge: 500 Services, Zero Downtime</h2>
+
+      <p>
+        Our existing infrastructure was a mix of AWS EC2 instances managed through a custom deployment system
+        built over 5 years. It worked, but barely. Each deploy required manual coordination, rollbacks were
+        risky, and we had no consistent way to manage configuration across environments.
+      </p>
+
+      <h3>Initial Constraints</h3>
+
+      <ul>
+        <li><strong>Timeline:</strong> 9 months from planning to full migration</li>
+        <li><strong>Team Size:</strong> 12 engineers (6 platform, 6 SRE)</li>
+        <li><strong>Services:</strong> 500+ microservices across 4 major product lines</li>
+        <li><strong>Traffic:</strong> 10M+ DAU, 2M peak concurrent users</li>
+        <li><strong>Uptime SLA:</strong> 99.95% (no more than 4 minutes downtime/month)</li>
+      </ul>
+
+      <p>
+        The zero-downtime requirement wasn't negotiable. Any service disruption would directly impact
+        revenue and user trust. We needed a migration strategy that allowed us to move incrementally
+        while maintaining production stability.
+      </p>
+
+      <h2>Phase 1: Building the Foundation (Months 1-3)</h2>
+
+      <p>
+        We started with the fundamentals: cluster design, networking, and tooling. The goal was to have
+        a production-ready Kubernetes foundation before migrating any services.
+      </p>
+
+      <h3>Cluster Architecture Decisions</h3>
+
+      <p>
+        After evaluating several approaches, we settled on a multi-cluster architecture:
+      </p>
+
+      <ul>
+        <li><strong>Production Clusters:</strong> Dedicated EKS clusters per region (us-east-1, us-west-2, eu-west-1)</li>
+        <li><strong>Staging Cluster:</strong> Single cluster for all pre-production testing</li>
+        <li><strong>Dev Cluster:</strong> Shared cluster for developer workloads</li>
+        <li><strong>Management Cluster:</strong> Runs cluster operations tooling (ArgoCD, monitoring, etc.)</li>
+      </ul>
+
+      <p>
+        The multi-cluster approach added operational complexity but gave us clear blast radius boundaries.
+        A bad deploy in us-west-2 wouldn't cascade to other regions.
+      </p>
+
+      <h3>Networking Strategy</h3>
+
+      <p>
+        We used AWS VPC CNI for pod networking with:
+      </p>
+
+      <ul>
+        <li>Pod security groups for fine-grained network policies</li>
+        <li>Private subnets for all worker nodes</li>
+        <li>AWS Load Balancer Controller for ingress</li>
+        <li>VPN peering between clusters for cross-region communication</li>
+      </ul>
+
+      <h2>Phase 2: Service Migration Pattern (Months 4-7)</h2>
+
+      <p>
+        With the foundation in place, we developed a repeatable migration pattern. The key insight:
+        migrate services in waves, starting with the lowest-risk services first.
+      </p>
+
+      <h3>Migration Waves</h3>
+
+      <ul>
+        <li><strong>Wave 1 (Internal Services):</strong> Background workers, batch jobs - 50 services</li>
+        <li><strong>Wave 2 (Low-Traffic APIs):</strong> Admin APIs, analytics endpoints - 75 services</li>
+        <li><strong>Wave 3 (Medium-Traffic APIs):</strong> Secondary features - 150 services</li>
+        <li><strong>Wave 4 (Critical APIs):</strong> Core user-facing services - 125 services</li>
+        <li><strong>Wave 5 (Data Services):</strong> Stateful services, databases - 100 services</li>
+      </ul>
+
+      <h3>The Migration Playbook</h3>
+
+      <p>
+        For each service, we followed this pattern:
+      </p>
+
+      <ol>
+        <li><strong>Containerize:</strong> Create Dockerfile, optimize for size and security</li>
+        <li><strong>Helm Chart:</strong> Standardized chart with our best practices baked in</li>
+        <li><strong>CI/CD Update:</strong> Deploy to dev → staging → canary → production</li>
+        <li><strong>Traffic Split:</strong> Gradually shift traffic from EC2 to K8s (10% → 50% → 100%)</li>
+        <li><strong>Monitor & Validate:</strong> 7-day observation period before decommissioning EC2</li>
+      </ol>
+
+      <h2>Phase 3: Operational Excellence (Months 8-9)</h2>
+
+      <p>
+        The final phase focused on making Kubernetes production-grade: monitoring, cost optimization,
+        disaster recovery, and developer experience.
+      </p>
+
+      <h3>Key Improvements</h3>
+
+      <ul>
+        <li><strong>Observability:</strong> Prometheus + Grafana + Loki for metrics, logs, traces</li>
+        <li><strong>Cost Optimization:</strong> Cluster Autoscaler, spot instances, right-sizing</li>
+        <li><strong>Security:</strong> Pod Security Standards, OPA policies, secret rotation</li>
+        <li><strong>Developer Experience:</strong> Telepresence for local dev, kubectl plugins, documentation</li>
+      </ul>
+
+      <h2>Results & Lessons Learned</h2>
+
+      <p>
+        After 9 months, we successfully migrated all 500 services to Kubernetes with impressive results:
+      </p>
+
+      <h3>Outcomes</h3>
+
+      <ul>
+        <li><strong>Uptime:</strong> 99.98% during migration (exceeded our SLA)</li>
+        <li><strong>Infrastructure Costs:</strong> 35% reduction through better resource utilization</li>
+        <li><strong>Deploy Frequency:</strong> 5x increase (200 → 1000+ deploys/week)</li>
+        <li><strong>Deploy Time:</strong> 80% reduction (45 min → 9 min average)</li>
+        <li><strong>MTTR:</strong> 60% improvement (30 min → 12 min average)</li>
+      </ul>
+
+      <h3>Hard Lessons</h3>
+
+      <p>
+        <strong>1. Start with stateless services.</strong> We learned this the hard way. Our first attempt
+        to migrate a stateful service (PostgreSQL replica) failed spectacularly. Stick to stateless workloads
+        until you have battle-tested patterns for stateful sets.
+      </p>
+
+      <p>
+        <strong>2. Networking is harder than you think.</strong> DNS propagation, load balancer warmup,
+        connection draining—all of these caused issues we didn't anticipate. Build extra time for networking debugging.
+      </p>
+
+      <p>
+        <strong>3. Developer experience matters more than perfection.</strong> We initially built a
+        "perfect" Helm chart with every possible configuration option. Developers hated it. The simplified
+        version with sane defaults got 90% adoption in weeks.
+      </p>
+
+      <p>
+        <strong>4. Cost optimization is not optional.</strong> Our first month's K8s bill was 40% higher
+        than EC2. Autoscaling, spot instances, and resource right-sizing brought it down to 35% less than EC2.
+      </p>
+
+      <h2>Would We Do It Again?</h2>
+
+      <p>
+        Absolutely. The migration was painful, but the operational improvements have been transformative.
+        Our engineering teams ship faster, our infrastructure is more reliable, and our costs are lower.
+      </p>
+
+      <p>
+        If you're considering a similar migration, my advice: start small, move incrementally, and
+        prioritize developer experience from day one.
+      </p>
     </div>
-  </section>
 
-  <!-- MAIN CONTENT -->
-  <main class="main-content">
-
-    <!-- FEATURED CONTENT -->
-    <section class="section">
-      <h2 class="section-title">Featured Writing</h2>
-      <div class="content-grid">
-
-        <article class="content-card">
-          <span class="card-tag">#technical-deep-dive</span>
-          <h3 class="card-title">
-            <a href="/writing/migrating-500-services-kubernetes.html">Migrating 500 Services to Kubernetes</a>
-          </h3>
-          <p class="card-excerpt">
-            Lessons from orchestrating a zero-downtime migration of legacy services to a modern container platform.
-          </p>
-          <div class="card-meta">
-            <span>Nov 10, 2025</span>
-            <span>12 min read</span>
-          </div>
-        </article>
-
-        <article class="content-card">
-          <span class="card-tag">#engineering-culture</span>
-          <h3 class="card-title">
-            <a href="/writing/building-ownership-engineering-teams">Building a Culture of Ownership</a>
-          </h3>
-          <p class="card-excerpt">
-            Three practical strategies for empowering engineers to take true ownership without burning out.
-          </p>
-          <div class="card-meta">
-            <span>Nov 5, 2025</span>
-            <span>8 min read</span>
-          </div>
-        </article>
-
-        <article class="content-card">
-          <span class="card-tag">#case-study</span>
-          <h3 class="card-title">
-            <a href="/work/multi-region-platform">Building a Multi-Region Platform</a>
-          </h3>
-          <p class="card-excerpt">
-            How we scaled infrastructure across 5 regions while maintaining 99.99% uptime and cutting costs by 40%.
-          </p>
-          <div class="card-meta">
-            <span>Oct 28, 2025</span>
-            <span>15 min read</span>
-          </div>
-        </article>
-
+    <footer class="article-footer">
+      <div class="tag-list">
+        <a href="/#tags/kubernetes" class="tag">#kubernetes</a>
+        <a href="/#tags/platform-engineering" class="tag">#platform-engineering</a>
+        <a href="/#tags/devops" class="tag">#devops</a>
+        <a href="/#tags/cloud-architecture" class="tag">#cloud-architecture</a>
+        <a href="/#tags/migration" class="tag">#migration</a>
       </div>
-    </section>
-
-    <!-- CASE STUDY EXAMPLE -->
-    <section class="section">
-      <h2 class="section-title">Recent Work</h2>
-
-      <div class="case-study-card">
-        <div class="tag-list">
-          <span class="tag">#case-study</span>
-          <span class="tag">#cloud-architecture</span>
-          <span class="tag">#platform-engineering</span>
-        </div>
-        <h3 class="case-study-title">Zero-Downtime Migration to Cloud-Native Architecture</h3>
-        <p class="case-study-description">
-          Led the technical strategy and execution for migrating a monolithic application to microservices,
-          serving 10M+ daily active users without a single minute of downtime.
-        </p>
-        <a href="/work/cloud-native-migration" class="case-study-link">View Case Study</a>
-      </div>
-
-      <div class="case-study-card">
-        <div class="tag-list">
-          <span class="tag">#case-study</span>
-          <span class="tag">#developer-experience</span>
-        </div>
-        <h3 class="case-study-title">Internal Developer Platform: From 6 Hours to 6 Minutes</h3>
-        <p class="case-study-description">
-          Built a self-service platform that reduced deployment time from 6 hours to 6 minutes,
-          enabling teams to ship 10x more frequently.
-        </p>
-        <a href="/work/developer-platform" class="case-study-link">View Case Study</a>
-      </div>
-    </section>
-
-  </main>
+      <p style="margin-top: var(--space-6); color: var(--color-text-secondary);">
+        Have questions about Kubernetes migrations or platform engineering?
+        <a href="mailto:john@example.com">Get in touch</a>.
+      </p>
+    </footer>
+  </article>
 
   <!-- FOOTER -->
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-links">
-        <a href="mailto:john@example.com" class="footer-link">email</a>
-        <a href="https://linkedin.com" class="footer-link">linkedin</a>
-        <a href="https://github.com" class="footer-link">github</a>
-        <a href="https://twitter.com" class="footer-link">twitter</a>
-        <a href="/feed.xml" class="footer-link">rss</a>
+        <a href="/" class="footer-link">Home</a>
+        <a href="/#work" class="footer-link">Work</a>
+        <a href="/#writing" class="footer-link">Writing</a>
+        <a href="/#speaking" class="footer-link">Speaking</a>
+        <a href="/#about" class="footer-link">About</a>
       </div>
       <p class="footer-meta">
-        Built with Jekyll • Hosted on GitHub<br>
-        Anthropic Typography System • Fira Code
+        © 2025 John Doe. All rights reserved.
       </p>
     </div>
   </footer>
 
   <!-- THEME TOGGLE SCRIPT -->
   <script>
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const html = document.documentElement;
+    // Initialize theme from localStorage or system preference
+    const initTheme = () => {
+      const savedTheme = localStorage.getItem('theme');
+      const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    };
 
-    // Check for saved theme preference or use system preference
-    const savedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Toggle theme
+    const toggleTheme = () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    };
 
-    if (savedTheme) {
-      html.setAttribute('data-theme', savedTheme);
-    } else if (systemPrefersDark) {
-      html.setAttribute('data-theme', 'dark');
-    } else {
-      html.setAttribute('data-theme', 'light');
-    }
+    // Initialize on load
+    initTheme();
 
-    // Toggle theme on button click
-    themeToggle.addEventListener('click', () => {
-      const currentTheme = html.getAttribute('data-theme');
-      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-
-      html.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-    });
-
-    // Listen for system theme changes
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) {
-        html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-      }
-    });
+    // Bind toggle button
+    document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
   </script>
 
 </body>
