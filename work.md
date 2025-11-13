@@ -93,4 +93,4 @@ Interested in collaborating? I'm available for:
 - Architecture reviews and technical due diligence
 - Speaking engagements and workshops
 
-[Get in touch](/contact/) to discuss opportunities.
+[Get in touch](/about/) to discuss opportunities.
