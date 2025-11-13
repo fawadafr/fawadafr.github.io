@@ -1,26 +1,47 @@
 ---
 layout: page
-title: Executive Biography
+title: About
 permalink: /about/
 ---
 
-Farida A. Wada is a board-savvy strategist who has spent the last fifteen years
-helping complex organizations harness technology, data, and culture to deliver
-sustainable growth. She currently serves as Chief Strategy Officer for NovaVista
-Holdings, where she steers group-wide transformation and orchestrates corporate
-development across Africa and the Middle East.
+# About
 
-With a background in management consulting and venture incubation, Farida has
-led portfolio turnarounds, modernized supply chains, and scaled inclusive fintech
-solutions that have reached millions of customers. She is equally at home in the
-boardroom and on the ground, translating strategy into pragmatic execution
-roadmaps that empower teams.
+## John Doe - Chief Technology Officer
 
-Farida is an advocate for inclusive innovation and serves as a mentor to emerging
-leaders through the Women in Leadership Collective. She holds an MBA from the
-INSEAD Global Executive Programme and certificates in sustainable finance,
-cybersecurity oversight, and design thinking.
+I'm a technology leader with 15+ years building resilient distributed systems and high-performing engineering teams.
 
-When she is not advising leadership teams, Farida invests her time in building
-the next generation of authentic leaders, speaking at global forums on ethical AI
-and resilience, and contributing essays on the future of work.
+Currently serving as CTO, I focus on three core areas:
+
+- **Platform Engineering** - Building developer platforms that enable teams to ship 10x faster
+- **Cloud Architecture** - Designing scalable, cost-effective infrastructure across multi-region deployments
+- **Engineering Culture** - Fostering ownership, psychological safety, and sustainable growth
+
+## Background
+
+My career has spanned startups to Fortune 500 companies, always focused on the intersection of technology strategy and execution. I believe in pragmatic architecture over perfection, measuring what matters, and building systems that scale both technically and organizationally.
+
+### What I Do
+
+- Lead engineering organizations (10-200+ engineers)
+- Architect cloud-native platforms and distributed systems
+- Build and scale developer experience and platform engineering teams
+- Advise boards and executive teams on technology strategy
+- Speak at conferences on platform engineering, SRE, and engineering leadership
+
+### Technical Focus Areas
+
+- **Infrastructure & Platforms:** Kubernetes, AWS/GCP/Azure, Terraform, Service Mesh
+- **Languages:** Go, Python, TypeScript, Rust
+- **Practices:** SRE, DevOps, Platform Engineering, Observability
+- **Domains:** Distributed Systems, Data Engineering, ML/AI Infrastructure
+
+## Speaking & Advisory
+
+I regularly speak at technology conferences and advise companies on platform strategy and engineering leadership. If you'd like to discuss a speaking engagement or advisory opportunity, please [get in touch](mailto:john@example.com).
+
+## Connect
+
+- Email: john@example.com
+- LinkedIn: [linkedin.com/in/johndoe](https://linkedin.com/in/johndoe)
+- GitHub: [github.com/johndoe](https://github.com/johndoe)
+- Twitter: [@johndoe](https://twitter.com/johndoe)

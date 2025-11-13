@@ -1,58 +1,87 @@
 ---
 layout: home
-title: "Executive Overview"
+title: "Home"
 permalink: /
 ---
 
 <section class="hero">
-  <h1>Guiding Bold Visions from Strategy to Sustainable Impact</h1>
-  <p>
-    Farida A. Wada is a growth-minded executive known for translating ambitious
-    board mandates into customer-centric transformations. She pairs a sharp
-    strategic lens with a human approach to leadership, championing modern
-    operating models that unlock measurable value.
+  <h1>Building resilient systems and high-performing engineering teams</h1>
+  <p class="subtitle">
+    CTO with 15+ years shipping distributed systems at scale.
+    Focused on pragmatic architecture, developer experience, and sustainable growth.
   </p>
-  <a class="cta" href="/contact/">Schedule a Strategic Conversation</a>
-</section>
-
-<section class="highlights">
-  <h2>Signature Leadership Value</h2>
-  <ul>
-    <li><strong>Transformation Steward:</strong> Led multi-market digital reinventions that delivered double-digit EBITDA lift within 18 months.</li>
-    <li><strong>Board-Ready Strategist:</strong> Trusted advisor on governance, ESG commitments, and enterprise resilience across regulated industries.</li>
-    <li><strong>People-Centric Catalyst:</strong> Builds inclusive leadership teams and talent pipelines that expand innovation capacity.</li>
-  </ul>
-</section>
-
-<section class="focus-areas">
-  <h2>2024 Areas of Focus</h2>
-  <div class="grid">
-    <article>
-      <h3>Digital Core Modernization</h3>
-      <p>Reimagining operating models with AI-enabled insights, intelligent automation, and adaptive data governance.</p>
-    </article>
-    <article>
-      <h3>Board Strategy & Stewardship</h3>
-      <p>Elevating board decision-making with scenario planning, enterprise risk analytics, and transparent stakeholder reporting.</p>
-    </article>
-    <article>
-      <h3>Sustainable Growth Ventures</h3>
-      <p>Building resilient ventures that integrate climate commitments with profitable market expansion.</p>
-    </article>
+  <div class="hero-tags">
+    <a href="/tags#platform-engineering" class="tag">#platform-engineering</a>
+    <a href="/tags#engineering-culture" class="tag">#engineering-culture</a>
+    <a href="/tags#cloud-architecture" class="tag">#cloud-architecture</a>
   </div>
 </section>
 
-<section class="latest">
-  <h2>Latest Insights</h2>
-  <p>Explore Farida's perspective on leading complex transformations and architecting future-fit organizations.</p>
-  <a class="cta" href="/insights/">Read the Insight Briefings</a>
+<section class="section">
+  <h2 class="section-title">Featured Writing</h2>
+  <div class="content-grid">
+    {% assign featured_posts = site.posts | where: "featured", true | limit: 3 %}
+    {% if featured_posts.size > 0 %}
+      {% for post in featured_posts %}
+        <article class="content-card">
+          <span class="card-tag">#{{ post.primary_tag }}</span>
+          <h3 class="card-title">
+            <a href="{{ post.url }}">{{ post.title }}</a>
+          </h3>
+          <p class="card-excerpt">{{ post.excerpt | strip_html | truncatewords: 30 }}</p>
+          <div class="card-meta">
+            <span>{{ post.date | date: "%b %d, %Y" }}</span>
+            {% if post.read_time %}
+              <span>{{ post.read_time }} min read</span>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    {% else %}
+      <article class="content-card">
+        <span class="card-tag">#technical-deep-dive</span>
+        <h3 class="card-title">
+          <a href="/writing">Explore Writing</a>
+        </h3>
+        <p class="card-excerpt">
+          Technical thought leadership on platform engineering, cloud architecture, and engineering culture.
+        </p>
+      </article>
+    {% endif %}
+  </div>
 </section>
 
-<section class="speaking">
-  <h2>Keynote & Advisory Highlights</h2>
-  <ul>
-    <li>World Summit on Responsible AI — "Orchestrating Ethics into Scalable Platforms"</li>
-    <li>Global Board Leaders Forum — "Resilience Playbooks for Disruptive Times"</li>
-    <li>Emerging Markets Innovation Council — "Designing Inclusive Digital Growth"</li>
-  </ul>
+<section class="section">
+  <h2 class="section-title">Recent Work</h2>
+
+  {% assign case_studies = site.case_studies | limit: 2 %}
+  {% if case_studies.size > 0 %}
+    {% for case_study in case_studies %}
+      <div class="case-study-card">
+        <div class="tag-list">
+          <span class="tag">#case-study</span>
+          {% for tag in case_study.tags limit:2 %}
+            <span class="tag">#{{ tag }}</span>
+          {% endfor %}
+        </div>
+        <h3 class="case-study-title">{{ case_study.title }}</h3>
+        <p class="case-study-description">{{ case_study.excerpt | strip_html }}</p>
+        <a href="{{ case_study.url }}" class="case-study-link">View Case Study</a>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="case-study-card">
+      <div class="tag-list">
+        <span class="tag">#case-study</span>
+        <span class="tag">#cloud-architecture</span>
+        <span class="tag">#platform-engineering</span>
+      </div>
+      <h3 class="case-study-title">Zero-Downtime Migration to Cloud-Native Architecture</h3>
+      <p class="case-study-description">
+        Led the technical strategy and execution for migrating a monolithic application to microservices,
+        serving 10M+ daily active users without a single minute of downtime.
+      </p>
+      <a href="/work" class="case-study-link">View Work</a>
+    </div>
+  {% endif %}
 </section>
