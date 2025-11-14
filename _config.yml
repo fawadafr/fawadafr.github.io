@@ -23,7 +23,6 @@ exclude:
 # Theme & appearance
 remote_theme: jekyll/minima
 plugins:
-  - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
 

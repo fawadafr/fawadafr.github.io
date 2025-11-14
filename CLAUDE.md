@@ -89,6 +89,126 @@ summary: One-line description for listing pages
 Detailed description of the engagement...
 ```
 
+### Jekyll Data Files
+
+**Note:** The current site uses standalone HTML files (not Jekyll templates). Data files are configured and ready for future use when transitioning to Jekyll-based templates.
+
+Jekyll data files in `_data/` allow you to separate content from presentation, making it easier to update recurring content without editing HTML. Data files are automatically loaded by Jekyll and accessible via `site.data`.
+
+#### Available Data Files
+
+1. **Board Service** (`_data/board-service.yml`)
+   - Advisory positions and board memberships
+   - Access via: `site.data.board-service.positions`
+
+2. **Certifications** (`_data/certifications.yml`)
+   - Professional certifications and credentials
+   - Access via: `site.data.certifications.certifications`
+
+3. **Media Appearances** (`_data/media-appearances.yml`)
+   - Speaking engagements, interviews, articles, podcasts
+   - Access via: `site.data.media-appearances.appearances`
+
+#### Usage Example (Jekyll Templates)
+
+```liquid
+<!-- Display Board Positions -->
+{% for position in site.data.board-service.positions %}
+<div class="board-position">
+  <h3>{{ position.organization }}</h3>
+  <p class="role">{{ position.role }}</p>
+  <p class="tenure">{{ position.start_date }} - {{ position.end_date }}</p>
+  <p>{{ position.description }}</p>
+  {% if position.url %}
+    <a href="{{ position.url }}">Learn more</a>
+  {% endif %}
+</div>
+{% endfor %}
+
+<!-- Display Certifications -->
+{% for cert in site.data.certifications.certifications %}
+<div class="certification">
+  <h4>{{ cert.name }}</h4>
+  <p>{{ cert.issuer }} • {{ cert.year }}</p>
+  {% if cert.verification_url %}
+    <a href="{{ cert.verification_url }}">Verify</a>
+  {% endif %}
+</div>
+{% endfor %}
+
+<!-- Display Media Appearances -->
+{% for appearance in site.data.media-appearances.appearances %}
+<article class="media-appearance">
+  <span class="type">{{ appearance.type }}</span>
+  <h4><a href="{{ appearance.url }}">{{ appearance.title }}</a></h4>
+  <p class="publication">{{ appearance.publication }} • {{ appearance.date | date: "%B %Y" }}</p>
+  {% if appearance.description %}
+    <p>{{ appearance.description }}</p>
+  {% endif %}
+</article>
+{% endfor %}
+```
+
+#### Adding New Data
+
+**Board Positions:**
+```yaml
+- organization: "Company Name"
+  role: "Board Member"
+  start_date: "2024-01"
+  end_date: "present"
+  description: "Brief description"
+  url: "https://example.com"
+```
+
+**Certifications:**
+```yaml
+- name: "Certification Name"
+  issuer: "Issuing Organization"
+  year: 2024
+  credential_id: "CERT-XXXXX"
+  verification_url: "https://verify.example.com"
+```
+
+**Media Appearances:**
+```yaml
+- title: "Article/Talk Title"
+  publication: "Publication Name"
+  date: "2024-01-15"
+  url: "https://example.com"
+  type: "interview | article | podcast | conference | webinar"
+  description: "Optional description"
+```
+
+#### Data File Best Practices
+
+- **Sort Order:** Most recent items first
+- **Dates:** Use ISO format (YYYY-MM-DD or YYYY-MM)
+- **URLs:** Always use https://
+- **Indentation:** Use 2 spaces (YAML requirement)
+- **Special Characters:** Quote strings with colons or special chars
+- **Testing:** Run `bundle exec jekyll build` to validate YAML syntax
+
+#### Common YAML Errors
+
+```yaml
+# ❌ Wrong: Unquoted string with colon
+description: Title: Something
+
+# ✅ Correct: Quote strings with special characters
+description: "Title: Something"
+
+# ❌ Wrong: Inconsistent indentation
+positions:
+    - organization: "Company"
+   role: "Role"
+
+# ✅ Correct: Consistent 2-space indentation
+positions:
+  - organization: "Company"
+    role: "Role"
+```
+
 ### Styling
 
 Custom styles are added via `assets/main.scss`. The site uses:

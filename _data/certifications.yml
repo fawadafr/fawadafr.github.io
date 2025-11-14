@@ -1,0 +1,40 @@
+# Professional Certifications & Credentials
+#
+# Schema:
+# - name: Certification name
+#   issuer: Issuing organization
+#   year: Year obtained
+#   credential_id: Optional credential ID
+#   verification_url: Optional verification URL
+#   description: Optional description
+#
+# Sort: Most recent first
+
+certifications:
+  - name: "Certified Kubernetes Administrator (CKA)"
+    issuer: "Cloud Native Computing Foundation (CNCF)"
+    year: 2023
+    credential_id: "CKA-2023-XXXXX"
+    verification_url: "https://example.com"
+    description: "Advanced certification demonstrating expertise in Kubernetes cluster administration, networking, and security."
+
+  - name: "AWS Certified Solutions Architect - Professional"
+    issuer: "Amazon Web Services (AWS)"
+    year: 2022
+    credential_id: "AWS-SAP-XXXXX"
+    verification_url: "https://example.com"
+    description: "Expert-level certification covering complex AWS architectures, migration strategies, and cost optimization."
+
+  - name: "Google Cloud Professional Cloud Architect"
+    issuer: "Google Cloud"
+    year: 2021
+    credential_id: "GCP-PCA-XXXXX"
+    verification_url: "https://example.com"
+    description: "Professional certification for designing, developing, and managing robust, secure, scalable, and dynamic solutions on Google Cloud."
+
+  - name: "Certified Information Systems Security Professional (CISSP)"
+    issuer: "ISC²"
+    year: 2020
+    credential_id: "CISSP-XXXXX"
+    verification_url: "https://example.com"
+    description: "Advanced security certification covering security architecture, risk management, and compliance frameworks."

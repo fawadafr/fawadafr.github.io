@@ -1,0 +1,54 @@
+# Media Appearances, Interviews & Speaking Engagements
+#
+# Schema:
+# - title: Article/segment title
+#   publication: Publication or event name
+#   date: YYYY-MM-DD
+#   url: Link to article/recording
+#   type: interview | article | podcast | conference | webinar
+#   description: Optional brief description
+#
+# Sort: Most recent first
+
+appearances:
+  - title: "Building Resilient Distributed Systems at Scale"
+    publication: "KubeCon + CloudNativeCon North America 2024"
+    date: "2024-11-12"
+    url: "https://example.com"
+    type: "conference"
+    description: "Keynote presentation on lessons learned from migrating 500+ services to Kubernetes with zero downtime."
+
+  - title: "The Future of Platform Engineering"
+    publication: "InfoQ Podcast"
+    date: "2024-09-20"
+    url: "https://example.com"
+    type: "podcast"
+    description: "Discussion on emerging trends in platform engineering, developer experience, and internal developer platforms."
+
+  - title: "How CTOs Should Approach Cloud-Native Transformation"
+    publication: "TechCrunch"
+    date: "2024-07-15"
+    url: "https://example.com"
+    type: "article"
+    description: "Interview covering strategies for successful cloud migration and organizational change management."
+
+  - title: "Engineering Culture: From Silos to Ownership"
+    publication: "Engineering Leadership Summit"
+    date: "2024-05-08"
+    url: "https://example.com"
+    type: "conference"
+    description: "Workshop on building engineering cultures that emphasize ownership, psychological safety, and sustainable practices."
+
+  - title: "DevOps Transformation: A CTO's Perspective"
+    publication: "The Changelog Podcast"
+    date: "2024-03-22"
+    url: "https://example.com"
+    type: "podcast"
+    description: "Deep dive into DevOps practices, platform engineering, and scaling engineering organizations."
+
+  - title: "Kubernetes in Production: Real-World Lessons"
+    publication: "The New Stack"
+    date: "2023-12-10"
+    url: "https://example.com"
+    type: "article"
+    description: "Featured article sharing production Kubernetes experiences, including failures, recovery strategies, and best practices."
