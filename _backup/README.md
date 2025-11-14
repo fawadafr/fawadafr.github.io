@@ -1,6 +1,6 @@
-# Farida A. Wada — Executive Personal Site
+# Fawad Rashidi — Executive Personal Site
 
-This repository hosts the source for Farida A. Wada's executive site powered by
+This repository hosts the source for Fawad Rashidi's executive site powered by
 [Jekyll](https://jekyllrb.com/) and the [`minima`](https://github.com/jekyll/minima)
 remote theme.
 

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a Jekyll-based executive personal website for Farida A. Wada, powered by the `minima` remote theme and hosted on GitHub Pages. The site showcases executive leadership experience, thought leadership, speaking engagements, and board service readiness.
+This is a Jekyll-based executive personal website for Fawad Rashidi, powered by the `minima` remote theme and hosted on GitHub Pages. The site showcases executive leadership experience, thought leadership, speaking engagements, and board service readiness.
 
 ## Development Commands
 

@@ -5,7 +5,7 @@ subtitle: Keynote | Global Board Leaders Forum
 summary: A pragmatic roadmap for boards to stay ahead of systemic risk.
 ---
 
-In this keynote, Farida partners with board directors to:
+In this keynote, Fawad partners with board directors to:
 
 1. Assess the maturity of resilience practices across strategy, culture, and
    operating models.

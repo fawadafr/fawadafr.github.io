@@ -3,7 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>John Doe - Chief Technology Officer</title>
+  <title>Fawad Rashidi - Chief Technology Officer</title>
+
+  <!-- Schema.org Person Markup (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Fawad Rashidi",
+    "jobTitle": "Chief Technology Officer",
+    "url": "https://lab.fawad.ai",
+    "description": "CTO with 15+ years shipping distributed systems at scale. Focused on pragmatic architecture, developer experience, and sustainable growth.",
+    "knowsAbout": [
+      "Platform Engineering",
+      "Cloud Architecture",
+      "Engineering Culture",
+      "Distributed Systems",
+      "Developer Experience"
+    ]
+  }
+  </script>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://lab.fawad.ai">
+  <meta property="og:title" content="Fawad Rashidi - Chief Technology Officer">
+  <meta property="og:description" content="CTO with 15+ years shipping distributed systems at scale. Focused on pragmatic architecture, developer experience, and sustainable growth.">
+  <meta property="og:site_name" content="Fawad Rashidi">
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Fawad Rashidi - Chief Technology Officer">
+  <meta name="twitter:description" content="CTO with 15+ years shipping distributed systems at scale. Focused on pragmatic architecture, developer experience, and sustainable growth.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
@@ -644,13 +676,64 @@
     .mb-8 { margin-bottom: var(--space-8); }
     .mb-12 { margin-bottom: var(--space-12); }
   </style>
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSLJNR3DWB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    // Page view tracking
+    gtag('config', 'G-YSLJNR3DWB', {
+      'page_title': document.title,
+      'page_location': window.location.href,
+      'page_path': window.location.pathname
+    });
+
+    // Event tracking for key actions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Email clicks
+      const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+      emailLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'contact_click', {
+            'event_category': 'engagement',
+            'event_label': 'email_click'
+          });
+        });
+      });
+
+      // LinkedIn clicks
+      const linkedinLinks = document.querySelectorAll('a[href*="linkedin.com"]');
+      linkedinLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'social_click', {
+            'event_category': 'engagement',
+            'event_label': 'linkedin_click'
+          });
+        });
+      });
+
+      // External link clicks
+      const externalLinks = document.querySelectorAll('a[href^="http"]:not([href*="lab.fawad.ai"])');
+      externalLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_link', {
+            'event_category': 'engagement',
+            'event_label': 'external_link_click'
+          });
+        });
+      });
+    });
+  </script>
 </head>
 <body>
 
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-container">
-      <a href="/" class="site-logo">john.doe</a>
+      <a href="/" class="site-logo">fawad.rashidi</a>
       <nav class="site-nav">
         <a href="#work" class="nav-link">work</a>
         <a href="#writing" class="nav-link">writing</a>
@@ -770,7 +853,7 @@
   <footer class="site-footer">
     <div class="footer-container">
       <div class="footer-links">
-        <a href="mailto:john@example.com" class="footer-link">email</a>
+        <a href="mailto:fawad@lab.fawad.ai" class="footer-link">email</a>
         <a href="https://linkedin.com" class="footer-link">linkedin</a>
         <a href="https://github.com" class="footer-link">github</a>
         <a href="https://twitter.com" class="footer-link">twitter</a>
