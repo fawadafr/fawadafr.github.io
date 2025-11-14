@@ -679,11 +679,152 @@
     /* ============================================
        UTILITY CLASSES
        ============================================ */
+    /* ============================================
+       SEARCH FUNCTIONALITY
+       ============================================ */
+    .search-container {
+      position: relative;
+      flex: 1;
+      max-width: 400px;
+      margin: 0 var(--space-6);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-2) var(--space-4);
+      padding-left: 36px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      font-family: var(--font-primary);
+      font-size: var(--text-para-s);
+      color: var(--color-text-primary);
+      transition: border-color 0.2s;
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+    }
+
+    .search-input::placeholder {
+      color: var(--color-text-secondary);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-text-secondary);
+      pointer-events: none;
+    }
+
+    .search-results {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 1001;
+      display: none;
+    }
+
+    .search-results.active {
+      display: block;
+    }
+
+    .search-result-item {
+      padding: var(--space-4);
+      border-bottom: 1px solid var(--color-border);
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover,
+    .search-result-item.focused {
+      background: var(--color-tag-bg);
+    }
+
+    .search-result-title {
+      font-family: var(--font-primary);
+      font-size: var(--text-para-m);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      font-weight: 500;
+    }
+
+    .search-result-excerpt {
+      font-size: var(--text-para-s);
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+
+    .search-result-meta {
+      font-size: var(--text-detail-xs);
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    .search-no-results {
+      padding: var(--space-8);
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: var(--text-para-s);
+    }
+
+    .search-loading {
+      padding: var(--space-4);
+      text-align: center;
+      color: var(--color-text-secondary);
+      font-size: var(--text-para-s);
+    }
+
+    /* Mobile search adjustments */
+    @media (max-width: 768px) {
+      .search-container {
+        max-width: 180px;
+        margin: 0 var(--space-2);
+      }
+
+      .search-input {
+        font-size: 0.75rem;
+        padding: 0.3rem 0.5rem;
+        padding-left: 28px;
+      }
+
+      .search-icon {
+        left: 8px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .search-container {
+        max-width: 120px;
+      }
+    }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
     .text-center { text-align: center; }
     .mt-8 { margin-top: var(--space-8); }
     .mb-8 { margin-bottom: var(--space-8); }
     .mb-12 { margin-bottom: var(--space-12); }
   </style>
+
+  <!-- lunr.js for client-side search -->
+  <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js" integrity="sha256-DFDZACuFeAqEKv/7Vnu1Tt5ALa58bcWZegG9pVHEkug=" crossorigin="anonymous"></script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSLJNR3DWB"></script>
@@ -737,6 +878,23 @@
   <header class="site-header">
     <div class="header-container">
       <a href="/" class="site-logo">fawad.rashidi</a>
+
+      <!-- SEARCH -->
+      <div class="search-container" role="search">
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search articles..."
+          aria-label="Search site content"
+          aria-autocomplete="list"
+          aria-controls="searchResults"
+          aria-expanded="false"
+        />
+        <div id="searchResults" class="search-results" role="listbox" aria-label="Search results"></div>
+      </div>
+
       <nav class="site-nav">
         <a href="#work" class="nav-link">work</a>
         <a href="#writing" class="nav-link">writing</a>
@@ -903,6 +1061,208 @@
         html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
       }
     });
+  </script>
+
+  <!-- SEARCH FUNCTIONALITY -->
+  <script>
+    (function() {
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+      let searchIndex = null;
+      let searchData = [];
+      let currentFocusIndex = -1;
+      let searchTimeout = null;
+
+      // Load search index
+      async function loadSearchIndex() {
+        try {
+          const response = await fetch('/search.json');
+          searchData = await response.json();
+
+          // Build lunr.js index
+          searchIndex = lunr(function() {
+            this.ref('url');
+            this.field('title', { boost: 10 });
+            this.field('excerpt', { boost: 5 });
+            this.field('content');
+            this.field('tags');
+
+            searchData.forEach((doc) => {
+              this.add(doc);
+            });
+          });
+        } catch (error) {
+          console.error('Failed to load search index:', error);
+        }
+      }
+
+      // Perform search
+      function performSearch(query) {
+        if (!searchIndex || query.length < 2) {
+          hideResults();
+          return;
+        }
+
+        try {
+          const results = searchIndex.search(query + '*'); // Wildcard for partial matches
+          displayResults(results.slice(0, 10)); // Limit to 10 results
+        } catch (error) {
+          console.error('Search error:', error);
+          hideResults();
+        }
+      }
+
+      // Display search results
+      function displayResults(results) {
+        searchResults.innerHTML = '';
+        currentFocusIndex = -1;
+
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+          searchResults.classList.add('active');
+          searchInput.setAttribute('aria-expanded', 'true');
+          return;
+        }
+
+        results.forEach((result, index) => {
+          const item = searchData.find(d => d.url === result.ref);
+          if (!item) return;
+
+          const resultEl = document.createElement('a');
+          resultEl.href = item.url;
+          resultEl.className = 'search-result-item';
+          resultEl.setAttribute('role', 'option');
+          resultEl.setAttribute('data-index', index);
+
+          let metaInfo = '';
+          if (item.date) {
+            metaInfo += `<span class="search-result-meta">${item.date}</span>`;
+          }
+          if (item.type) {
+            metaInfo += `<span class="search-result-meta"> • ${item.type}</span>`;
+          }
+
+          resultEl.innerHTML = `
+            <div class="search-result-title">${item.title}</div>
+            <div class="search-result-excerpt">${item.excerpt || ''}</div>
+            ${metaInfo}
+          `;
+
+          resultEl.addEventListener('click', (e) => {
+            gtag('event', 'search_result_click', {
+              'event_category': 'engagement',
+              'event_label': item.title
+            });
+          });
+
+          searchResults.appendChild(resultEl);
+        });
+
+        searchResults.classList.add('active');
+        searchInput.setAttribute('aria-expanded', 'true');
+
+        // Announce results to screen readers
+        const resultsCount = results.length;
+        searchInput.setAttribute('aria-label', `Search site content. ${resultsCount} result${resultsCount !== 1 ? 's' : ''} found`);
+      }
+
+      // Hide search results
+      function hideResults() {
+        searchResults.classList.remove('active');
+        searchResults.innerHTML = '';
+        searchInput.setAttribute('aria-expanded', 'false');
+        searchInput.setAttribute('aria-label', 'Search site content');
+        currentFocusIndex = -1;
+      }
+
+      // Keyboard navigation
+      function navigateResults(direction) {
+        const items = searchResults.querySelectorAll('.search-result-item');
+        if (items.length === 0) return;
+
+        // Remove previous focus
+        if (currentFocusIndex >= 0 && currentFocusIndex < items.length) {
+          items[currentFocusIndex].classList.remove('focused');
+        }
+
+        // Update focus index
+        if (direction === 'down') {
+          currentFocusIndex = (currentFocusIndex + 1) % items.length;
+        } else if (direction === 'up') {
+          currentFocusIndex = currentFocusIndex <= 0 ? items.length - 1 : currentFocusIndex - 1;
+        }
+
+        // Add new focus
+        items[currentFocusIndex].classList.add('focused');
+        items[currentFocusIndex].scrollIntoView({ block: 'nearest' });
+      }
+
+      // Handle keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        // Cmd/Ctrl+K to focus search
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+          return;
+        }
+
+        // Only handle these keys if search is focused
+        if (document.activeElement !== searchInput) return;
+
+        switch(e.key) {
+          case 'ArrowDown':
+            e.preventDefault();
+            navigateResults('down');
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            navigateResults('up');
+            break;
+          case 'Enter':
+            e.preventDefault();
+            const items = searchResults.querySelectorAll('.search-result-item');
+            if (currentFocusIndex >= 0 && currentFocusIndex < items.length) {
+              items[currentFocusIndex].click();
+            }
+            break;
+          case 'Escape':
+            e.preventDefault();
+            hideResults();
+            searchInput.blur();
+            break;
+        }
+      });
+
+      // Debounced search on input
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+
+        clearTimeout(searchTimeout);
+
+        if (query.length < 2) {
+          hideResults();
+          return;
+        }
+
+        searchResults.innerHTML = '<div class="search-loading">Searching...</div>';
+        searchResults.classList.add('active');
+
+        searchTimeout = setTimeout(() => {
+          performSearch(query);
+        }, 300); // 300ms debounce
+      });
+
+      // Close results when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+          hideResults();
+        }
+      });
+
+      // Initialize search index on page load
+      loadSearchIndex();
+    })();
   </script>
 
 </body>

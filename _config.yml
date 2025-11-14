@@ -6,6 +6,10 @@ description: >-
 url: "https://fawadafr.github.io"
 baseurl: ""
 
+# Include search.json in build
+include:
+  - search.json
+
 # Exclude docs and includes from Jekyll processing
 exclude:
   - docs/
@@ -13,6 +17,8 @@ exclude:
   - README.md
   - Gemfile
   - Gemfile.lock
+  - vendor/
+  - .bundle/
 
 # Theme & appearance
 remote_theme: jekyll/minima
