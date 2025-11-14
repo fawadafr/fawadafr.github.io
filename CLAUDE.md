@@ -103,6 +103,44 @@ When adding new styles, maintain consistency with existing design patterns.
 
 The site is deployed automatically via GitHub Pages:
 - **URL**: https://fawadafr.github.io
-- **Custom Domain**: Configured via CNAME file
+- **Custom Domain**: Configured via CNAME file (https://lab.fawad.ai)
 - **Branch**: Deploys from `main` branch
 - No separate build process required—GitHub Pages builds Jekyll sites automatically
+
+## SEO & Analytics (Sprint 1-2 Implementation)
+
+### Schema.org Structured Data
+The site implements JSON-LD structured data for enhanced search engine visibility:
+
+**Person Schema** (`index.html`):
+- Type: Person
+- Includes: name, jobTitle, url, image, LinkedIn profile (sameAs), expertise areas (knowsAbout)
+- Purpose: Enables Google Knowledge Panel eligibility
+
+**Article Schema** (blog posts):
+- Type: Article
+- Includes: headline, author, datePublished, dateModified, keywords, description
+- Purpose: Rich snippets in search results
+
+**BreadcrumbList Schema** (article pages):
+- Enables breadcrumb navigation in search results
+- Example: Home > Writing > Article Title
+
+### Open Graph & Social Sharing
+All pages include Open Graph and Twitter Card meta tags:
+- `og:title`, `og:description`, `og:url`, `og:type`
+- `og:image`: Generic placeholder at `/assets/images/og-default.svg` (1200x630px)
+- `twitter:card` set to "summary_large_image"
+- Test social previews: Twitter Card Validator, Facebook Debugger, LinkedIn Post Inspector
+
+### Google Analytics 4
+- **Measurement ID**: `G-YSLJNR3DWB`
+- **Standard gtag.js implementation**
+- **Event Tracking**: Email clicks, social links, external links, article views
+- **Privacy Policy**: Available at `/privacy.html`
+
+### Validation Tools
+- **Schema Testing**: https://search.google.com/test/rich-results
+- **Twitter Cards**: https://cards-dev.twitter.com/validator
+- **Facebook**: https://developers.facebook.com/tools/debug/
+- **LinkedIn**: https://www.linkedin.com/post-inspector/
