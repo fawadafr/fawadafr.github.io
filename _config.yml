@@ -1,10 +1,18 @@
-title: "John Doe"
+title: "Fawad Rashidi"
 tagline: "Chief Technology Officer"
 description: >-
   Building resilient systems and high-performing engineering teams.
   CTO with 15+ years shipping distributed systems at scale.
 url: "https://fawadafr.github.io"
 baseurl: ""
+
+# Exclude docs and includes from Jekyll processing
+exclude:
+  - docs/
+  - _includes/analytics.html
+  - README.md
+  - Gemfile
+  - Gemfile.lock
 
 # Theme & appearance
 remote_theme: jekyll/minima
@@ -24,8 +32,8 @@ minima:
       user_url: https://twitter.com/johndoe
 
 author:
-  name: "John Doe"
-  email: "john@example.com"
+  name: "Fawad Rashidi"
+  email: "fawad@lab.fawad.ai"
   location: "San Francisco, CA"
   role: "Chief Technology Officer"
   tagline: "Platform Engineering • Cloud Architecture • Engineering Culture"
