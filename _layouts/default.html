@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
+
+  <!-- SEO Tags -->
+  {% seo %}
+
+  <!-- RSS Feed Autodiscovery -->
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title | escape }} - RSS Feed" href="{{ '/feed.xml' | relative_url }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Load custom CSS from assets/main.scss -->
+  <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+
+  <!-- lunr.js for client-side search -->
+  <script src="https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js"></script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YSLJNR3DWB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-YSLJNR3DWB');
+
+    // Event tracking for key actions
+    document.addEventListener('DOMContentLoaded', function() {
+      // Email clicks
+      const emailLinks = document.querySelectorAll('a[href^="mailto:"]');
+      emailLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'contact_click', {
+            'event_category': 'engagement',
+            'event_label': 'email_click'
+          });
+        });
+      });
+
+      // LinkedIn clicks
+      const linkedinLinks = document.querySelectorAll('a[href*="linkedin.com"]');
+      linkedinLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'social_click', {
+            'event_category': 'engagement',
+            'event_label': 'linkedin_click'
+          });
+        });
+      });
+
+      // External link clicks
+      const externalLinks = document.querySelectorAll('a[href^="http"]:not([href*="lab.fawad.ai"])');
+      externalLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_link', {
+            'event_category': 'engagement',
+            'event_label': 'external_link_click'
+          });
+        });
+      });
+
+      // Related post clicks
+      const relatedPostLinks = document.querySelectorAll('[data-event="related-post-click"]');
+      relatedPostLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          gtag('event', 'related_post_click', {
+            'event_category': 'content_discovery',
+            'event_label': 'related_posts',
+            'source_post': document.title,
+            'target_post': this.getAttribute('data-post-title'),
+            'link_url': this.href
+          });
+        });
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <!-- SKIP TO CONTENT LINK -->
+  <a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="{{ '/' | relative_url }}" class="site-logo">fawad.rashidi</a>
+
+      <!-- SEARCH -->
+      <div class="search-container" role="search" aria-label="Site search">
+        <label for="searchInput" class="sr-only">Search site content</label>
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search articles..."
+          aria-label="Search site content"
+          aria-autocomplete="list"
+          aria-controls="searchResults"
+          aria-expanded="false"
+        />
+        <div id="searchResults" class="search-results" role="listbox" aria-label="Search results"></div>
+      </div>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="{{ '/work/' | relative_url }}" class="nav-link">work</a>
+        <a href="{{ '/blog/' | relative_url }}" class="nav-link">blog</a>
+        <a href="{{ '/speaking/' | relative_url }}" class="nav-link">speaking</a>
+        <a href="{{ '/tags/' | relative_url }}" class="nav-link">#tags</a>
+        <a href="{{ '/about/' | relative_url }}" class="nav-link">about</a>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle between light and dark theme" aria-pressed="false">
+          <span class="sun-icon" aria-hidden="true">☀</span>
+          <span class="moon-icon" aria-hidden="true">☾</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content" class="main-content">
+    {{ content }}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-links">
+        <a href="mailto:{{ site.author.email }}" class="footer-link">email</a>
+        <a href="https://www.linkedin.com/in/fawadafr" class="footer-link">linkedin</a>
+        <a href="https://github.com" class="footer-link">github</a>
+        <a href="https://twitter.com" class="footer-link">twitter</a>
+        <a href="{{ '/feed.xml' | relative_url }}" class="footer-link">rss</a>
+        <a href="{{ '/privacy.html' | relative_url }}" class="footer-link">privacy</a>
+      </div>
+      <p class="footer-meta">
+        Built with Jekyll • Hosted on GitHub<br>
+        Anthropic Typography System • Fira Code
+      </p>
+    </div>
+  </footer>
+
+  <!-- THEME TOGGLE SCRIPT -->
+  <script>
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    // Update aria-pressed based on theme
+    function updateAriaPressed(theme) {
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+
+    // Check for saved theme preference or use system preference
+    const savedTheme = localStorage.getItem('theme');
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    if (savedTheme) {
+      html.setAttribute('data-theme', savedTheme);
+      updateAriaPressed(savedTheme);
+    } else if (systemPrefersDark) {
+      html.setAttribute('data-theme', 'dark');
+      updateAriaPressed('dark');
+    } else {
+      html.setAttribute('data-theme', 'light');
+      updateAriaPressed('light');
+    }
+
+    // Toggle theme on button click
+    themeToggle.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateAriaPressed(newTheme);
+    });
+
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+      if (!localStorage.getItem('theme')) {
+        const newTheme = e.matches ? 'dark' : 'light';
+        html.setAttribute('data-theme', newTheme);
+        updateAriaPressed(newTheme);
+      }
+    });
+  </script>
+
+  <!-- SEARCH FUNCTIONALITY -->
+  <script>
+    (function() {
+      const searchInput = document.getElementById('searchInput');
+      const searchResults = document.getElementById('searchResults');
+      let searchIndex = null;
+      let searchData = [];
+      let currentFocusIndex = -1;
+      let searchTimeout = null;
+      let indexLoading = true;
+
+      // Wait for lunr.js to be loaded
+      function waitForLunr() {
+        return new Promise((resolve) => {
+          if (typeof lunr !== 'undefined') {
+            resolve();
+          } else {
+            const checkInterval = setInterval(() => {
+              if (typeof lunr !== 'undefined') {
+                clearInterval(checkInterval);
+                resolve();
+              }
+            }, 50); // Check every 50ms
+          }
+        });
+      }
+
+      // Load search index
+      async function loadSearchIndex() {
+        try {
+          // Wait for lunr.js to be available
+          await waitForLunr();
+          console.log('lunr.js loaded successfully');
+
+          // Fetch search data
+          const response = await fetch('{{ "/search.json" | relative_url }}');
+          searchData = await response.json();
+          console.log('Search data loaded:', searchData.length, 'items');
+
+          // Build lunr.js index
+          searchIndex = lunr(function() {
+            this.ref('url');
+            this.field('title', { boost: 10 });
+            this.field('excerpt', { boost: 5 });
+            this.field('content');
+            this.field('tags');
+
+            searchData.forEach((doc) => {
+              this.add(doc);
+            });
+          });
+
+          indexLoading = false;
+          console.log('Search index built successfully');
+        } catch (error) {
+          console.error('Failed to load search index:', error);
+          indexLoading = false;
+        }
+      }
+
+      // Perform search
+      function performSearch(query) {
+        if (query.length < 2) {
+          hideResults();
+          return;
+        }
+
+        if (indexLoading) {
+          searchResults.innerHTML = '<div class="search-loading">Loading search index...</div>';
+          searchResults.classList.add('active');
+          return;
+        }
+
+        if (!searchIndex) {
+          searchResults.innerHTML = '<div class="search-no-results">Search is not available</div>';
+          searchResults.classList.add('active');
+          return;
+        }
+
+        try {
+          const results = searchIndex.search(query + '*'); // Wildcard for partial matches
+          displayResults(results.slice(0, 10)); // Limit to 10 results
+        } catch (error) {
+          console.error('Search error:', error);
+          hideResults();
+        }
+      }
+
+      // Display search results
+      function displayResults(results) {
+        searchResults.innerHTML = '';
+        currentFocusIndex = -1;
+
+        if (results.length === 0) {
+          searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+          searchResults.classList.add('active');
+          searchInput.setAttribute('aria-expanded', 'true');
+          return;
+        }
+
+        results.forEach((result, index) => {
+          const item = searchData.find(d => d.url === result.ref);
+          if (!item) return;
+
+          const resultEl = document.createElement('a');
+          resultEl.href = item.url;
+          resultEl.className = 'search-result-item';
+          resultEl.setAttribute('role', 'option');
+          resultEl.setAttribute('data-index', index);
+
+          let metaInfo = '';
+          if (item.date) {
+            metaInfo += `<span class="search-result-meta">${item.date}</span>`;
+          }
+          if (item.type) {
+            metaInfo += `<span class="search-result-meta"> • ${item.type}</span>`;
+          }
+
+          resultEl.innerHTML = `
+            <div class="search-result-title">${item.title}</div>
+            <div class="search-result-excerpt">${item.excerpt || ''}</div>
+            ${metaInfo}
+          `;
+
+          resultEl.addEventListener('click', (e) => {
+            gtag('event', 'search_result_click', {
+              'event_category': 'engagement',
+              'event_label': item.title
+            });
+          });
+
+          searchResults.appendChild(resultEl);
+        });
+
+        searchResults.classList.add('active');
+        searchInput.setAttribute('aria-expanded', 'true');
+
+        // Announce results to screen readers
+        const resultsCount = results.length;
+        searchInput.setAttribute('aria-label', `Search site content. ${resultsCount} result${resultsCount !== 1 ? 's' : ''} found`);
+      }
+
+      // Hide search results
+      function hideResults() {
+        searchResults.classList.remove('active');
+        searchResults.innerHTML = '';
+        searchInput.setAttribute('aria-expanded', 'false');
+        searchInput.setAttribute('aria-label', 'Search site content');
+        currentFocusIndex = -1;
+      }
+
+      // Keyboard navigation
+      function navigateResults(direction) {
+        const items = searchResults.querySelectorAll('.search-result-item');
+        if (items.length === 0) return;
+
+        // Remove previous focus
+        if (currentFocusIndex >= 0 && currentFocusIndex < items.length) {
+          items[currentFocusIndex].classList.remove('focused');
+        }
+
+        // Update focus index
+        if (direction === 'down') {
+          currentFocusIndex = (currentFocusIndex + 1) % items.length;
+        } else if (direction === 'up') {
+          currentFocusIndex = currentFocusIndex <= 0 ? items.length - 1 : currentFocusIndex - 1;
+        }
+
+        // Add new focus
+        items[currentFocusIndex].classList.add('focused');
+        items[currentFocusIndex].scrollIntoView({ block: 'nearest' });
+      }
+
+      // Handle keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        // Cmd/Ctrl+K to focus search
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+          return;
+        }
+
+        // Only handle these keys if search is focused
+        if (document.activeElement !== searchInput) return;
+
+        switch(e.key) {
+          case 'ArrowDown':
+            e.preventDefault();
+            navigateResults('down');
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            navigateResults('up');
+            break;
+          case 'Enter':
+            e.preventDefault();
+            const items = searchResults.querySelectorAll('.search-result-item');
+            if (currentFocusIndex >= 0 && currentFocusIndex < items.length) {
+              items[currentFocusIndex].click();
+            }
+            break;
+          case 'Escape':
+            e.preventDefault();
+            hideResults();
+            searchInput.blur();
+            break;
+        }
+      });
+
+      // Debounced search on input
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.trim();
+
+        clearTimeout(searchTimeout);
+
+        if (query.length < 2) {
+          hideResults();
+          return;
+        }
+
+        searchResults.innerHTML = '<div class="search-loading">Searching...</div>';
+        searchResults.classList.add('active');
+
+        searchTimeout = setTimeout(() => {
+          performSearch(query);
+        }, 300); // 300ms debounce
+      });
+
+      // Close results when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+          hideResults();
+        }
+      });
+
+      // Initialize search index on page load
+      loadSearchIndex();
+    })();
+  </script>
+
+</body>
+</html>
