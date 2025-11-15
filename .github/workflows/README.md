@@ -47,11 +47,15 @@ This directory contains GitHub Actions workflows that automate quality assurance
    - Pipeline health check
 
 **Auto-Actions:**
-- ✅ **Success:** Summary posted to workflow run
-- ⚠️ **Issues Found:** GitHub issue created/updated automatically
+- ✅ **Success:** GitHub issue created and auto-closed (email notification sent)
+- ⚠️ **Issues Found:** GitHub issue created/updated and left open for action
 - 📊 **Reports:** Detailed metrics in step summary
 
-**Issue Creation Thresholds:**
+**Issue Creation:**
+- **Success Case:** Issue created with ✅ status, immediately closed (notification only)
+- **Failure Case:** Issue created/updated with action items, left open until resolved
+
+**Failure Thresholds:**
 - Build success rate < 80%
 - Orphaned files detected
 - Validation tests failing
@@ -264,10 +268,27 @@ gh workflow view weekly-quality-check.yml
 
 ### Workflow Notifications
 
-**Email Notifications:**
-1. Go to GitHub Settings → Notifications
-2. Enable "Actions" notifications
-3. Choose email/web/mobile preferences
+**Automatic Email Notifications:**
+
+Both workflows create GitHub issues that trigger email notifications for repository watchers:
+
+1. **Weekly Quality Check:**
+   - **Success:** Creates closed issue with ✅ status (notification sent, no action needed)
+   - **Failure:** Creates/updates open issue with action items (requires resolution)
+
+2. **Monthly Quality Review:**
+   - **Always:** Creates issue with comprehensive monthly report (requires review)
+
+**How It Works:**
+- GitHub sends email when issues are created
+- Repository watchers receive notifications automatically
+- Success issues are immediately closed (notification only)
+- Failure issues remain open until resolved
+
+**Managing Notifications:**
+- Repository watching settings: https://github.com/fawadafr/fawadafr.github.io/subscription
+- Personal notification settings: https://github.com/settings/notifications
+- Filter by label: `quality`, `automated`, `success`
 
 **Slack Integration** (optional):
 - Add Slack app to workspace
