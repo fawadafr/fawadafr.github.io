@@ -1,0 +1,38 @@
+<!-- SKIP TO CONTENT LINK -->
+<a href="#main-content" class="skip-to-content">Skip to main content</a>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-container">
+    <a href="{{ '/' | relative_url }}" class="site-logo">fawad.rashidi</a>
+
+    <!-- SEARCH -->
+    <div class="search-container" role="search" aria-label="Site search">
+      <label for="searchInput" class="sr-only">Search site content</label>
+      <span class="search-icon" aria-hidden="true">🔍</span>
+      <input
+        type="text"
+        id="searchInput"
+        class="search-input"
+        placeholder="Search articles..."
+        aria-label="Search site content"
+        aria-autocomplete="list"
+        aria-controls="searchResults"
+        aria-expanded="false"
+      />
+      <div id="searchResults" class="search-results" role="listbox" aria-label="Search results"></div>
+    </div>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <a href="{{ '/work/' | relative_url }}" class="nav-link">work</a>
+      <a href="{{ '/blog/' | relative_url }}" class="nav-link">blog</a>
+      <a href="{{ '/speaking/' | relative_url }}" class="nav-link">speaking</a>
+      <a href="{{ '/tags/' | relative_url }}" class="nav-link">#tags</a>
+      <a href="{{ '/about/' | relative_url }}" class="nav-link">about</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle between light and dark theme" aria-pressed="false">
+        <span class="sun-icon" aria-hidden="true">☀</span>
+        <span class="moon-icon" aria-hidden="true">☾</span>
+      </button>
+    </nav>
+  </div>
+</header>
