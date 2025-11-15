@@ -1,0 +1,34 @@
+{
+  "recommendations": [
+    // HTML Validation (CRITICAL)
+    "html-validate.vscode-html-validate",
+
+    // Jekyll/Liquid Support
+    "ginfuru.ginfuru-vscode-jekyll-syntax",
+    "sissel.shopify-liquid",
+
+    // Markdown Support
+    "yzhang.markdown-all-in-one",
+    "davidanson.vscode-markdownlint",
+
+    // YAML Support (for _config.yml, data files)
+    "redhat.vscode-yaml",
+
+    // Git Tools
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+
+    // Web Development
+    "formulahendry.auto-rename-tag",
+    "bradlc.vscode-tailwindcss",
+
+    // Quality & Linting
+    "dbaeumer.vscode-eslint",
+    "stylelint.vscode-stylelint",
+
+    // Productivity
+    "streetsidesoftware.code-spell-checker",
+    "editorconfig.editorconfig"
+  ],
+  "unwantedRecommendations": []
+}

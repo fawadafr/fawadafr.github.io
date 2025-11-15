@@ -7,6 +7,8 @@
     "validate:html": "echo 'Skipping HTML validation (source files contain Liquid templates)'",
     "validate:html:site": "html-validate '_site/**/*.html'",
     "test:validation": ".github/tests/html-validation/test-validation.sh",
+    "build:report": "./scripts/build-quality-report.sh",
+    "build:report:detailed": "./scripts/build-quality-report.sh 50",
     "prepare": "husky install"
   },
   "devDependencies": {

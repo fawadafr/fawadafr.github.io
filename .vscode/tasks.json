@@ -1,0 +1,114 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Jekyll: Serve",
+      "type": "shell",
+      "command": "bundle exec jekyll serve",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Jekyll: Serve with Drafts",
+      "type": "shell",
+      "command": "bundle exec jekyll serve --drafts",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "Jekyll: Build",
+      "type": "shell",
+      "command": "bundle exec jekyll build",
+      "group": "build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Jekyll: Build with LSI",
+      "type": "shell",
+      "command": "bundle exec jekyll build --lsi",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Validate: HTML (Built Site)",
+      "type": "shell",
+      "command": "npm run validate:html:site",
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Test: Validation Suite",
+      "type": "shell",
+      "command": "npm run test:validation",
+      "group": "test",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Assets: Optimize",
+      "type": "shell",
+      "command": "./scripts/optimize-assets.sh",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Git: Status",
+      "type": "shell",
+      "command": "git status",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Bundle: Install",
+      "type": "shell",
+      "command": "bundle install",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "NPM: Install",
+      "type": "shell",
+      "command": "npm install",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}

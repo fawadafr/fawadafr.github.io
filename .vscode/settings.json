@@ -1,0 +1,83 @@
+{
+  // HTML Validation
+  "html-validate.enable": true,
+  "html-validate.configFile": ".htmlvalidate.json",
+  "html-validate.validateOnType": true,
+  "html-validate.validateOnSave": true,
+
+  // HTML Formatting
+  "html.format.enable": true,
+  "html.format.wrapLineLength": 120,
+  "html.format.indentInnerHtml": true,
+  "html.format.preserveNewLines": true,
+  "html.format.maxPreserveNewLines": 2,
+  "html.format.wrapAttributes": "auto",
+
+  // Jekyll/Liquid Support
+  "files.associations": {
+    "*.html": "html",
+    "*.md": "markdown"
+  },
+
+  // Editor Settings
+  "editor.formatOnSave": false,
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.trimAutoWhitespace": true,
+
+  // File Exclusions (performance)
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "_site": true,
+    ".sass-cache": true,
+    ".jekyll-cache": true,
+    ".jekyll-metadata": true,
+    "vendor": true,
+    "node_modules": true
+  },
+
+  // Search Exclusions
+  "search.exclude": {
+    "_site": true,
+    ".sass-cache": true,
+    ".jekyll-cache": true,
+    "vendor": true,
+    "node_modules": true,
+    "*.lock": true
+  },
+
+  // File Watching
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/vendor/**": true,
+    "**/_site/**": true,
+    "**/.sass-cache/**": true,
+    "**/.jekyll-cache/**": true
+  },
+
+  // Jekyll Specific
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": false,
+      "strings": false,
+      "other": false
+    }
+  },
+
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+
+  // Git
+  "git.ignoreLimitWarning": true,
+
+  // Recommended: Enable ESLint for JavaScript
+  "eslint.enable": true,
+  "eslint.validate": [
+    "javascript"
+  ]
+}

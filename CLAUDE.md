@@ -8,6 +8,7 @@ This file provides a quick reference for development. For comprehensive document
 
 - **[User Manual](docs/user-manual.md)** - Complete feature documentation, content authoring, deployment, and troubleshooting
 - **[Customization Guide](docs/customization-guide.md)** - Design system, CSS architecture, styling, and theming
+- **[Monitoring Guide](docs/monitoring-guide.md)** - Build quality metrics, monitoring dashboard, and quality tracking
 - **[PRD Implementation Report](docs/prd-implementation-report.md)** - Feature implementation status and technical details
 - **[Editorial Calendar](docs/editorial-calendar.md)** - Content planning and publishing schedule
 - **[CHANGELOG](CHANGELOG.md)** - Development feature changelog and version history
@@ -73,6 +74,38 @@ npm run validate:html:site        # Validate HTML files in _site (after Jekyll b
 # ✅ Correct: Properly closed tag
 <div>Content</div>
 ```
+
+### Build Quality Monitoring
+```bash
+npm run build:report                  # Generate build quality report (last 30 runs)
+npm run build:report:detailed         # Detailed report (last 50 runs)
+./scripts/build-quality-report.sh 100 # Custom number of runs
+```
+
+**Metrics Tracked:**
+- Success/failure rates
+- Trend analysis (recent vs. earlier builds)
+- Recent failures with dates and IDs
+- Recommendations based on success rate
+
+**See:** [Monitoring Guide](docs/monitoring-guide.md) for comprehensive build quality tracking
+
+### IDE Integration
+
+**VS Code Configuration:**
+- `.vscode/settings.json` - HTML validation, formatting, Jekyll support
+- `.vscode/extensions.json` - Recommended extensions (html-validate, Jekyll syntax, etc.)
+- `.vscode/tasks.json` - Quick commands (serve, build, validate)
+- `.editorconfig` - Cross-editor code style consistency
+
+**Recommended VS Code Extensions:**
+- `html-validate.vscode-html-validate` - Real-time HTML validation
+- `ginfuru.ginfuru-vscode-jekyll-syntax` - Jekyll/Liquid syntax support
+- `yzhang.markdown-all-in-one` - Markdown editing
+
+**Quick Commands (VS Code):**
+- `Cmd+Shift+B` - Start Jekyll server
+- `Cmd+Shift+P` → "Run Task" → Select task
 
 ### GitHub Pages Deployment
 The site automatically deploys via GitHub Actions when changes are pushed to the `main` branch. No manual build commands required.
