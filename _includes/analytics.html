@@ -64,5 +64,19 @@
         });
       });
     });
+
+    // Related post clicks (Sprint 5-6: Engagement tracking)
+    const relatedPostLinks = document.querySelectorAll('a[data-event="related-post-click"]');
+    relatedPostLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        trackEvent('related_post_click', {
+          'event_category': 'content_discovery',
+          'event_label': 'related_posts',
+          'source_post': document.title,
+          'target_post': this.getAttribute('data-post-title'),
+          'link_url': this.href
+        });
+      });
+    });
   });
 </script>

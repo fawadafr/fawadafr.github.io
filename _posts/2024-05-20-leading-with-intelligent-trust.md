@@ -2,6 +2,7 @@
 layout: post
 title: Leading with Intelligent Trust in AI-Driven Enterprises
 excerpt: How boards and executives can unlock innovation while safeguarding ethics
+tags: [leadership, ai, governance, ethics, innovation]
 ---
 
 Boards everywhere are grappling with the dual promise and risk of AI-driven

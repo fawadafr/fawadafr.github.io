@@ -75,6 +75,58 @@ excerpt: Brief description for previews and SEO
 Your content here...
 ```
 
+### Draft Posts & Scheduled Publishing
+
+#### Working with Drafts
+
+**Creating a Draft:**
+1. Create a new file in the `_drafts/` folder
+2. Use filename WITHOUT date prefix: `post-title-slug.md`
+3. Include standard front matter (layout, title, excerpt, tags)
+
+**Previewing Drafts Locally:**
+```bash
+bundle exec jekyll serve --drafts
+```
+This starts the dev server and includes draft posts at the top of the blog.
+
+**Publishing a Draft:**
+1. Move the file from `_drafts/` to `_posts/`
+2. Add date prefix to filename: `YYYY-MM-DD-post-title-slug.md`
+3. Commit and push to deploy
+
+**Important:** Drafts are NEVER included in production builds on GitHub Pages. They only appear when using the `--drafts` flag locally.
+
+#### Scheduled Publishing (Future-Dated Posts)
+
+**Scheduling a Post:**
+1. Create file in `_posts/` with a FUTURE date: `2026-01-15-future-post.md`
+2. Jekyll is configured with `future: false` in `_config.yml`
+3. The post will NOT appear in builds until after the date
+
+**When Scheduled Posts Go Live:**
+- GitHub Pages rebuilds on every push to the `main` branch
+- Posts with future dates are excluded from the build
+- After the scheduled date passes, the post appears on the next rebuild
+- To trigger immediate publish: make any commit (even an empty one)
+
+**Manual Trigger:**
+```bash
+# Create empty commit to trigger rebuild
+git commit --allow-empty -m "Trigger rebuild for scheduled posts"
+git push
+```
+
+#### Editorial Calendar
+
+Content planning and scheduling is managed in `docs/editorial-calendar.md`:
+- Track upcoming posts and publish dates
+- Manage post status (draft, scheduled, published)
+- Plan quarterly content themes
+- Maintain backlog of content ideas
+
+See the editorial calendar for content workflow, publishing cadence, and style guidelines.
+
 ### Speaking Engagements
 Create new files in `_speaking/` with a descriptive filename:
 

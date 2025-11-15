@@ -508,6 +508,202 @@ pre code {
 }
 
 /* ============================================
+   RELATED POSTS SECTION
+   ============================================ */
+.related-posts {
+  margin-top: var(--space-24);
+  padding-top: var(--space-16);
+  border-top: 1px solid var(--color-border);
+}
+
+.related-posts h3 {
+  font-size: var(--text-display-m) !important;
+  margin-bottom: var(--space-8) !important;
+  text-align: center;
+  color: var(--color-text-primary);
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-6);
+}
+
+.related-post {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: var(--space-6);
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.related-post:hover {
+  border-color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.related-post h4 {
+  font-size: var(--text-display-xs) !important;
+  margin-bottom: var(--space-3) !important;
+  line-height: var(--leading-tight) !important;
+}
+
+.related-post h4 a {
+  color: var(--color-text-primary) !important;
+  text-decoration: none;
+}
+
+.related-post h4 a:hover {
+  color: var(--color-accent) !important;
+  text-decoration: none !important;
+}
+
+.related-post .excerpt {
+  font-size: var(--text-para-s);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-normal);
+}
+
+.related-post .post-tags {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.related-post .post-tags .tag {
+  font-size: 0.625rem;
+  padding: 0.2rem 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .related-posts {
+    margin-top: var(--space-16);
+    padding-top: var(--space-12);
+  }
+}
+
+/* ============================================
+   PAGINATION
+   ============================================ */
+.pagination {
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--color-border);
+}
+
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.pagination-link {
+  display: inline-block;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary) !important;
+  text-decoration: none;
+  font-size: var(--text-para-s);
+  transition: all 0.2s;
+}
+
+.pagination-link:hover:not(.pagination-disabled) {
+  border-color: var(--color-accent);
+  color: var(--color-accent) !important;
+  text-decoration: none !important;
+}
+
+.pagination-link.pagination-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  color: var(--color-text-secondary) !important;
+}
+
+.pagination-info {
+  font-size: var(--text-para-s);
+  color: var(--color-text-secondary);
+  font-family: var(--font-primary);
+}
+
+.pagination-pages {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.pagination-number {
+  display: inline-block;
+  width: 2.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary) !important;
+  text-decoration: none;
+  font-size: var(--text-para-s);
+  transition: all 0.2s;
+}
+
+.pagination-number:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent) !important;
+  text-decoration: none !important;
+}
+
+.pagination-number.pagination-current {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white !important;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .pagination-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pagination-link {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .pagination-pages {
+    margin-top: var(--space-4);
+  }
+}
+
+/* ============================================
+   POST LIST
+   ============================================ */
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.post-list .content-card {
+  margin-bottom: 0;
+}
+
+.page-intro {
+  font-size: var(--text-para-l);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: var(--space-12);
+  line-height: var(--leading-normal);
+}
+
+/* ============================================
    UTILITY CLASSES
    ============================================ */
 .text-center { text-align: center; }

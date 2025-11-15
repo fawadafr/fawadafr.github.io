@@ -2,6 +2,7 @@
 layout: post
 title: Designing Operating Models for Volatile Markets
 excerpt: Three plays for sustaining performance when disruption is constant
+tags: [strategy, resilience, leadership, operating-model]
 ---
 
 Resilience is no longer a bolt-on. It must be designed into the operating model

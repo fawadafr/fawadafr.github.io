@@ -25,6 +25,17 @@ remote_theme: jekyll/minima
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-paginate
+
+# Publishing controls
+future: false  # Don't publish posts with future dates
+
+# Related posts configuration
+related_posts_count: 3  # Number of related posts to show
+
+# Pagination configuration
+paginate: 10  # Posts per page
+paginate_path: "/blog/page:num/"  # URL structure for paginated pages
 
 minima:
   skin: classic
