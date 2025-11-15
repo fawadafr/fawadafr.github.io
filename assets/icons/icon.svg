@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#2563EB"/>
+
+  <!-- FR initials in monospace style -->
+  <text x="256" y="330" font-family="'Fira Code', monospace" font-size="280" font-weight="500" fill="#FAFAFA" text-anchor="middle">FR</text>
+
+  <!-- Subtle grid pattern for tech aesthetic -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#60A5FA" stroke-width="0.5" opacity="0.2"/>
+    </pattern>
+  </defs>
+  <rect width="512" height="512" fill="url(#grid)"/>
+</svg>
