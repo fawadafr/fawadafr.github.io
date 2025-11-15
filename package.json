@@ -9,6 +9,8 @@
     "test:validation": ".github/tests/html-validation/test-validation.sh",
     "build:report": "./scripts/build-quality-report.sh",
     "build:report:detailed": "./scripts/build-quality-report.sh 50",
+    "cleanup:check": "./scripts/detect-orphaned-files.sh",
+    "cleanup:delete": "./scripts/detect-orphaned-files.sh --delete",
     "prepare": "husky install"
   },
   "devDependencies": {

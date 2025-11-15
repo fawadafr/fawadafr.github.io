@@ -9,6 +9,7 @@ This file provides a quick reference for development. For comprehensive document
 - **[User Manual](docs/user-manual.md)** - Complete feature documentation, content authoring, deployment, and troubleshooting
 - **[Customization Guide](docs/customization-guide.md)** - Design system, CSS architecture, styling, and theming
 - **[Monitoring Guide](docs/monitoring-guide.md)** - Build quality metrics, monitoring dashboard, and quality tracking
+- **[Quality Gates Policy](docs/quality-gates-policy.md)** - Quality standards, gates, and enforcement procedures
 - **[PRD Implementation Report](docs/prd-implementation-report.md)** - Feature implementation status and technical details
 - **[Editorial Calendar](docs/editorial-calendar.md)** - Content planning and publishing schedule
 - **[CHANGELOG](CHANGELOG.md)** - Development feature changelog and version history
@@ -89,6 +90,23 @@ npm run build:report:detailed         # Detailed report (last 50 runs)
 - Recommendations based on success rate
 
 **See:** [Monitoring Guide](docs/monitoring-guide.md) for comprehensive build quality tracking
+
+### File Cleanup & Maintenance
+```bash
+npm run cleanup:check                 # Detect orphaned files (dry run)
+npm run cleanup:delete                # Remove orphaned files (destructive)
+./scripts/detect-orphaned-files.sh    # Alias for cleanup:check
+```
+
+**Checks Performed:**
+- Orphaned HTML files in root (not referenced in configs)
+- Temporary/backup files (*.tmp, *.bak, .DS_Store, etc.)
+- Stale drafts (>6 months old)
+- Potentially unused assets
+
+**Safety:** Runs in dry-run mode by default. Use `--delete` flag cautiously.
+
+**See:** [Quality Gates Policy](docs/quality-gates-policy.md) for maintenance procedures
 
 ### IDE Integration
 
