@@ -35,6 +35,16 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Validate HTML
+        run: |
+          npm install -g html-validate
+          echo "Validating HTML files..."
+          html-validate "_site/**/*.html" --config .htmlvalidate.json || {
+            echo "❌ HTML validation failed!"
+            echo "Please fix the HTML errors above before deploying."
+            exit 1
+          }
+
       - name: Setup Node.js for optimization
         uses: actions/setup-node@v4
         with:

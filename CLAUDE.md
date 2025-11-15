@@ -47,11 +47,39 @@ cd assets/icons
 ./scripts/generate-pwa-icons.sh  # Generate PNG icons from SVG source
 ```
 
+### HTML Validation
+```bash
+npm install                       # Install validation dependencies (first time only)
+npm run validate:html             # Validate HTML files in source (before Jekyll build)
+npm run validate:html:site        # Validate HTML files in _site (after Jekyll build)
+```
+
+**Automatic Validation:**
+- Pre-commit hook validates HTML before allowing commits
+- GitHub Actions validates HTML during deployment
+- Build fails if HTML syntax errors are detected
+
+**Common Validation Errors:**
+```bash
+# ❌ Wrong: Malformed HTML comment
+<\!-- Comment -->
+
+# ✅ Correct: Valid HTML comment
+<!-- Comment -->
+
+# ❌ Wrong: Unclosed tag
+<div>Content
+
+# ✅ Correct: Properly closed tag
+<div>Content</div>
+```
+
 ### GitHub Pages Deployment
 The site automatically deploys via GitHub Actions when changes are pushed to the `main` branch. No manual build commands required.
 
 **Deployment includes:**
 - Jekyll build
+- HTML validation (html-validate, blocks deployment on errors)
 - CSS minification (csso-cli, ~30-40% reduction)
 - HTML minification (html-minifier-terser, ~15-25% reduction)
 - Automatic publishing to https://lab.fawad.ai

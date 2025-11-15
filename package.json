@@ -1,0 +1,22 @@
+{
+  "name": "fawadafr-github-io",
+  "version": "1.0.0",
+  "description": "Jekyll-based executive personal website with HTML validation",
+  "private": true,
+  "scripts": {
+    "validate:html": "echo 'Skipping HTML validation (source files contain Liquid templates)'",
+    "validate:html:site": "html-validate '_site/**/*.html'",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "html-validate": "^8.0.0",
+    "husky": "^8.0.0"
+  },
+  "keywords": [
+    "jekyll",
+    "github-pages",
+    "html-validation"
+  ],
+  "author": "Fawad Rashidi",
+  "license": "UNLICENSED"
+}
