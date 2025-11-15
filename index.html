@@ -1146,11 +1146,33 @@
       let searchTimeout = null;
       let indexLoading = true;
 
+      // Wait for lunr.js to be loaded
+      function waitForLunr() {
+        return new Promise((resolve) => {
+          if (typeof lunr !== 'undefined') {
+            resolve();
+          } else {
+            const checkInterval = setInterval(() => {
+              if (typeof lunr !== 'undefined') {
+                clearInterval(checkInterval);
+                resolve();
+              }
+            }, 50); // Check every 50ms
+          }
+        });
+      }
+
       // Load search index
       async function loadSearchIndex() {
         try {
+          // Wait for lunr.js to be available
+          await waitForLunr();
+          console.log('lunr.js loaded successfully');
+
+          // Fetch search data
           const response = await fetch('/search.json');
           searchData = await response.json();
+          console.log('Search data loaded:', searchData.length, 'items');
 
           // Build lunr.js index
           searchIndex = lunr(function() {
@@ -1166,7 +1188,7 @@
           });
 
           indexLoading = false;
-          console.log('Search index loaded:', searchData.length, 'items');
+          console.log('Search index built successfully');
         } catch (error) {
           console.error('Failed to load search index:', error);
           indexLoading = false;
