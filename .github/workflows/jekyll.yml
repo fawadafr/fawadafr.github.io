@@ -38,12 +38,49 @@ jobs:
       - name: Validate HTML
         run: |
           npm install -g html-validate
-          echo "Validating HTML files..."
-          html-validate "_site/**/*.html" --config .htmlvalidate.json || {
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "HTML VALIDATION"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+          # Count HTML files
+          HTML_COUNT=$(find _site -name "*.html" -type f | wc -l)
+          echo "📄 Files to validate: $HTML_COUNT"
+
+          # Run validation and capture output
+          if html-validate "_site/**/*.html" --config .htmlvalidate.json --formatter stylish > validation-report.txt 2>&1; then
+            echo "✅ All HTML files passed validation!"
+            echo ""
+            echo "## ✅ HTML Validation: PASSED" >> $GITHUB_STEP_SUMMARY
+            echo "- **Files validated:** $HTML_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- **Errors found:** 0" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status:** All files valid ✅" >> $GITHUB_STEP_SUMMARY
+          else
             echo "❌ HTML validation failed!"
+            echo ""
+            cat validation-report.txt
+            echo ""
+
+            # Count errors
+            ERROR_COUNT=$(grep -c "error" validation-report.txt || echo "0")
+
+            # Add GitHub Actions annotation
+            echo "::error title=HTML Validation Failed::Found $ERROR_COUNT validation errors. See job logs for details."
+
+            # Add to step summary
+            echo "## ❌ HTML Validation: FAILED" >> $GITHUB_STEP_SUMMARY
+            echo "- **Files validated:** $HTML_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- **Errors found:** $ERROR_COUNT" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status:** Deployment blocked ⛔" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Errors" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            cat validation-report.txt >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+
+            echo ""
             echo "Please fix the HTML errors above before deploying."
             exit 1
-          }
+          fi
 
       - name: Setup Node.js for optimization
         uses: actions/setup-node@v4
@@ -69,15 +106,34 @@ jobs:
       - name: Optimize HTML
         run: |
           echo "Optimizing HTML files..."
+          > skipped-html.txt  # Clear skip log
+          TOTAL=0
+          SKIPPED=0
+
           find _site -name "*.html" -type f | while read file; do
+            ((TOTAL++)) || true
             echo "Minifying: $file"
-            html-minifier-terser \
+            if ! html-minifier-terser \
               --collapse-whitespace \
               --remove-comments \
               --minify-css true \
               --minify-js true \
-              "$file" -o "$file" 2>/dev/null || echo "  ⚠️  Skipped (minification error)"
+              "$file" -o "$file" 2>/dev/null; then
+              echo "  ⚠️  Skipped (minification error)"
+              echo "$file" >> skipped-html.txt
+              ((SKIPPED++)) || true
+              echo "::warning file=$file::HTML minification failed for this file"
+            fi
           done
+
+          # Report skipped files
+          if [ -s skipped-html.txt ]; then
+            SKIP_COUNT=$(wc -l < skipped-html.txt)
+            echo ""
+            echo "⚠️  Warning: $SKIP_COUNT file(s) skipped during HTML minification"
+            echo "Skipped files:"
+            cat skipped-html.txt
+          fi
 
       - name: Convert images to WebP
         run: |
