@@ -57,7 +57,7 @@ author:
 # Navigation
 header_pages:
   - work.md
-  - writing.md
+  - blog/index.html
   - speaking.md
   - tags.md
   - about.md
