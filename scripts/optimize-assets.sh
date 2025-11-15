@@ -47,7 +47,6 @@ echo ""
 
 # Optimize HTML
 echo "Optimizing HTML files..."
-HTML_COUNT=0
 find _site -name "*.html" -type f | while read file; do
   echo "  Minifying: $file"
   html-minifier-terser \
@@ -61,7 +60,6 @@ find _site -name "*.html" -type f | while read file; do
     --minify-css true \
     --minify-js true \
     "$file" -o "$file" 2>/dev/null
-  HTML_COUNT=$((HTML_COUNT + 1))
 done
 echo "✓ HTML optimization complete"
 echo ""
