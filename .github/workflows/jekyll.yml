@@ -35,6 +35,77 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      - name: Setup Node.js for optimization
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install optimization tools
+        run: |
+          npm install -g csso-cli html-minifier-terser
+          sudo apt-get update
+          sudo apt-get install -y webp imagemagick
+
+      - name: Optimize CSS
+        run: |
+          echo "Optimizing CSS files..."
+          find _site -name "*.css" -type f -exec sh -c '
+            for file; do
+              echo "Minifying: $file"
+              csso "$file" --output "$file"
+            done
+          ' sh {} +
+
+      - name: Optimize HTML
+        run: |
+          echo "Optimizing HTML files..."
+          find _site -name "*.html" -type f -exec sh -c '
+            for file; do
+              echo "Minifying: $file"
+              html-minifier-terser \
+                --collapse-whitespace \
+                --remove-comments \
+                --remove-optional-tags \
+                --remove-redundant-attributes \
+                --remove-script-type-attributes \
+                --remove-tag-whitespace \
+                --use-short-doctype \
+                --minify-css true \
+                --minify-js true \
+                --input-dir . \
+                --file-ext html \
+                "$file" -o "$file"
+            done
+          ' sh {} +
+
+      - name: Convert images to WebP
+        run: |
+          echo "Converting images to WebP..."
+          find _site -type f \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" \) | while read img; do
+            if [ -f "$img" ]; then
+              webp_img="${img%.*}.webp"
+              echo "Converting: $img -> $webp_img"
+              cwebp -q 85 "$img" -o "$webp_img" 2>/dev/null || true
+            fi
+          done
+
+      - name: Optimize existing images
+        run: |
+          echo "Optimizing JPG/PNG images..."
+          find _site -type f \( -name "*.jpg" -o -name "*.jpeg" \) -exec mogrify -strip -quality 85 {} \;
+          find _site -type f -name "*.png" -exec mogrify -strip {} \;
+
+      - name: Display optimization results
+        run: |
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "ASSET OPTIMIZATION COMPLETE"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+          echo "CSS files: $(find _site -name "*.css" | wc -l) minified"
+          echo "HTML files: $(find _site -name "*.html" | wc -l) minified"
+          echo "WebP images: $(find _site -name "*.webp" | wc -l) created"
+          echo "Total site size: $(du -sh _site | cut -f1)"
+          echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
