@@ -2,9 +2,10 @@
 layout: default
 title: Blog
 permalink: /blog/
+pagination:
+  enabled: true
+  collection: posts
 ---
-
-{% include pagination-seo.html %}
 
 <div class="page">
   <header class="page-header">
@@ -71,7 +72,7 @@ permalink: /blog/
         {% elsif page_num == 1 %}
           <a href="{{ '/blog/' | relative_url }}" class="pagination-number">{{ page_num }}</a>
         {% else %}
-          <a href="{{ site.paginate_path | replace: ':num', page_num | relative_url }}" class="pagination-number">{{ page_num }}</a>
+          <a href="{{ '/blog/page/' | append: page_num | append: '/' | relative_url }}" class="pagination-number">{{ page_num }}</a>
         {% endif %}
       {% endfor %}
     </div>

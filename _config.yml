@@ -25,17 +25,24 @@ remote_theme: jekyll/minima
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-  - jekyll-paginate
+  - jekyll-paginate-v2
 
 # Publishing controls
 future: false  # Don't publish posts with future dates
 
 # Related posts configuration
+lsi: true  # Enable Latent Semantic Indexing for smarter related posts
 related_posts_count: 3  # Number of related posts to show
 
-# Pagination configuration
-paginate: 10  # Posts per page
-paginate_path: "/blog/page:num/"  # URL structure for paginated pages
+# Pagination configuration (jekyll-paginate-v2)
+pagination:
+  enabled: true
+  per_page: 10
+  permalink: '/page/:num/'
+  title: ':title - Page :num'
+  limit: 0
+  sort_field: 'date'
+  sort_reverse: true
 
 minima:
   skin: classic
