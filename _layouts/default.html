@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title | escape }} - {% endif %}{{ site.title | escape }}</title>
 
-  <!-- SEO Tags -->
+  <!-- SEO Tags (includes title tag) -->
   {% seo %}
 
   <!-- RSS Feed Autodiscovery -->
@@ -95,6 +94,11 @@
   {% include footer.html %}
 
   {% include scripts.html %}
+
+  <!-- PWA Install Button -->
+  <button id="pwa-install-button" aria-label="Install app">
+    <span>📱 Install App</span>
+  </button>
 
 </body>
 </html>
