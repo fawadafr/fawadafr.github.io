@@ -60,8 +60,7 @@ jobs:
           echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
 
           # Check if below threshold
-          # TEMP: Set to -1 for testing success notifications
-          if (( $(echo "$SUCCESS_RATE < -1" | bc -l) )); then
+          if (( $(echo "$SUCCESS_RATE < 80" | bc -l) )); then
             echo "quality_issue=true" >> $GITHUB_OUTPUT
             echo "⚠️ **WARNING:** Success rate ($SUCCESS_RATE%) is below 80% threshold" >> $GITHUB_STEP_SUMMARY
           else
@@ -101,9 +100,18 @@ jobs:
           echo "## ✅ Validation Test Suite" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
 
-          # TEMP: Force tests to pass for testing success notifications
-          echo "tests_passed=true" >> $GITHUB_OUTPUT
-          echo "✅ All validation tests passed (test mode)" >> $GITHUB_STEP_SUMMARY
+          # Run tests
+          if npm run test:validation > test-report.txt 2>&1; then
+            echo "tests_passed=true" >> $GITHUB_OUTPUT
+            echo "✅ All validation tests passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "tests_passed=false" >> $GITHUB_OUTPUT
+            echo "❌ **ERROR:** Validation tests failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat test-report.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Create issue for quality problems
         if: steps.quality_report.outputs.quality_issue == 'true' || steps.orphan_check.outputs.orphans_found == 'true' || steps.validation_tests.outputs.tests_passed == 'false'
