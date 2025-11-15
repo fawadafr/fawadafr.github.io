@@ -1,0 +1,37 @@
+<!-- Media Appearances & Speaking -->
+{% if site.data.media-appearances.appearances.size > 0 %}
+<section class="section media-appearances">
+  <h2 class="section-title">Media & Speaking</h2>
+
+  <div class="media-list">
+    {% for appearance in site.data.media-appearances.appearances %}
+    <article class="media-card">
+      <div class="media-header">
+        {% if appearance.type %}
+          <span class="media-type media-type-{{ appearance.type }}">{{ appearance.type }}</span>
+        {% endif %}
+        <time class="media-date" datetime="{{ appearance.date }}">
+          {{ appearance.date | date: "%b %d, %Y" }}
+        </time>
+      </div>
+
+      <h3 class="media-title">
+        {% if appearance.url %}
+          <a href="{{ appearance.url }}" target="_blank" rel="noopener noreferrer">
+            {{ appearance.title }}
+          </a>
+        {% else %}
+          {{ appearance.title }}
+        {% endif %}
+      </h3>
+
+      <div class="media-publication">{{ appearance.publication }}</div>
+
+      {% if appearance.description %}
+        <p class="media-description">{{ appearance.description }}</p>
+      {% endif %}
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

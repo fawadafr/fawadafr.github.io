@@ -1,0 +1,32 @@
+<!-- Professional Certifications -->
+{% if site.data.certifications.certifications.size > 0 %}
+<section class="section certifications">
+  <h2 class="section-title">Certifications & Credentials</h2>
+
+  <div class="certifications-grid">
+    {% for cert in site.data.certifications.certifications %}
+    <article class="certification-card">
+      <h3 class="cert-name">{{ cert.name }}</h3>
+      <div class="cert-issuer">{{ cert.issuer }}</div>
+      <div class="cert-year">{{ cert.year }}</div>
+
+      {% if cert.description %}
+        <p class="cert-description">{{ cert.description }}</p>
+      {% endif %}
+
+      <div class="cert-footer">
+        {% if cert.credential_id %}
+          <span class="cert-id">ID: {{ cert.credential_id }}</span>
+        {% endif %}
+
+        {% if cert.verification_url %}
+          <a href="{{ cert.verification_url }}" class="cert-verify" target="_blank" rel="noopener noreferrer">
+            Verify →
+          </a>
+        {% endif %}
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
