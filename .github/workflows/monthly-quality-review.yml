@@ -1,0 +1,233 @@
+name: Monthly Quality Deep Dive
+
+on:
+  # Run on the first Monday of each month at 10:00 AM UTC
+  schedule:
+    - cron: '0 10 1-7 * 1'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  deep-dive:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          gem install classifier-reborn
+
+      - name: Build site
+        run: bundle exec jekyll build --lsi
+        env:
+          GITHUB_PAGES: true
+
+      - name: Comprehensive build quality analysis
+        id: comprehensive_quality
+        run: |
+          echo "## 📊 Monthly Quality Deep Dive" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Analysis Date:** $(date '+%Y-%m-%d')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Last 100 runs for comprehensive view
+          ./scripts/build-quality-report.sh 100 > quality-deep-dive.txt 2>&1 || true
+
+          echo "### Build Quality (Last 100 Runs)" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat quality-deep-dive.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          # Extract metrics
+          SUCCESS_RATE=$(grep "Success Rate:" quality-deep-dive.txt | grep -oE '[0-9]+\.[0-9]+' || echo "0")
+          TOTAL_RUNS=$(grep "SUMMARY (Last" quality-deep-dive.txt | grep -oE '[0-9]+' | head -1 || echo "0")
+          FAILURES=$(grep "Failed:" quality-deep-dive.txt | grep -oE '[0-9]+' | head -1 || echo "0")
+
+          echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+          echo "total_runs=$TOTAL_RUNS" >> $GITHUB_OUTPUT
+          echo "failures=$FAILURES" >> $GITHUB_OUTPUT
+
+      - name: Repository health check
+        id: repo_health
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Repository Health" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Orphaned files
+          npm run cleanup:check > repo-health.txt 2>&1 || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat repo-health.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          # Check for issues
+          ORPHAN_COUNT=$(grep "Total issues found:" repo-health.txt | grep -oE '[0-9]+$')
+          echo "orphan_count=$ORPHAN_COUNT" >> $GITHUB_OUTPUT
+
+      - name: Validation pipeline health
+        id: validation_health
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Validation Pipeline Health" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run all tests
+          if npm run test:validation > validation-health.txt 2>&1; then
+            echo "✅ All validation tests passed" >> $GITHUB_STEP_SUMMARY
+            echo "validation_ok=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ Validation tests failed" >> $GITHUB_STEP_SUMMARY
+            echo "validation_ok=false" >> $GITHUB_OUTPUT
+          fi
+
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat validation-health.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Repository statistics
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Repository Statistics" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Count content
+          POST_COUNT=$(find _posts -name "*.md" 2>/dev/null | wc -l)
+          DRAFT_COUNT=$(find _drafts -name "*.md" 2>/dev/null | wc -l)
+          SPEAKING_COUNT=$(find _speaking -name "*.md" 2>/dev/null | wc -l)
+
+          echo "- **Published Posts:** $POST_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- **Draft Posts:** $DRAFT_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "- **Speaking Engagements:** $SPEAKING_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Recent activity
+          echo "### Recent Activity (Last 30 Days)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          RECENT_COMMITS=$(git log --since="30 days ago" --oneline | wc -l)
+          echo "- **Commits:** $RECENT_COMMITS" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create monthly review issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const successRate = parseFloat('${{ steps.comprehensive_quality.outputs.success_rate }}');
+            const totalRuns = '${{ steps.comprehensive_quality.outputs.total_runs }}';
+            const failures = '${{ steps.comprehensive_quality.outputs.failures }}';
+            const orphanCount = parseInt('${{ steps.repo_health.outputs.orphan_count }}');
+            const validationOk = '${{ steps.validation_health.outputs.validation_ok }}' === 'true';
+
+            const date = new Date().toISOString().split('T')[0];
+            const month = new Date().toLocaleString('default', { month: 'long', year: 'numeric' });
+
+            let issueBody = `## Monthly Quality Review - ${month}\n\n`;
+            issueBody += `**Review Date:** ${date}\n`;
+            issueBody += `**Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
+
+            issueBody += '---\n\n';
+            issueBody += '### Executive Summary\n\n';
+
+            // Overall status
+            let overallStatus = '✅ HEALTHY';
+            let actionRequired = false;
+
+            if (successRate < 80 || orphanCount > 2 || !validationOk) {
+              overallStatus = '⚠️ NEEDS ATTENTION';
+              actionRequired = true;
+            } else if (successRate < 95 || orphanCount > 0) {
+              overallStatus = '🟡 ACCEPTABLE';
+            }
+
+            issueBody += `**Overall Status:** ${overallStatus}\n\n`;
+
+            issueBody += '### Key Metrics\n\n';
+            issueBody += `| Metric | Value | Target | Status |\n`;
+            issueBody += `|--------|-------|--------|--------|\n`;
+            issueBody += `| Build Success Rate | ${successRate}% | ≥95% | ${successRate >= 95 ? '✅' : successRate >= 80 ? '🟡' : '❌'} |\n`;
+            issueBody += `| Total Builds (100d) | ${totalRuns} | - | ℹ️ |\n`;
+            issueBody += `| Failures | ${failures} | - | ℹ️ |\n`;
+            issueBody += `| Orphaned Files | ${orphanCount} | 0 | ${orphanCount === 0 ? '✅' : orphanCount <= 2 ? '🟡' : '❌'} |\n`;
+            issueBody += `| Validation Tests | ${validationOk ? 'Pass' : 'Fail'} | Pass | ${validationOk ? '✅' : '❌'} |\n\n`;
+
+            if (actionRequired) {
+              issueBody += '### 🚨 Actions Required\n\n';
+
+              if (successRate < 80) {
+                issueBody += '1. **Build Quality Critical:** Success rate below 80% threshold\n';
+                issueBody += '   - Review failed builds in detail\n';
+                issueBody += '   - Identify root causes and patterns\n';
+                issueBody += '   - Implement corrective measures immediately\n\n';
+              }
+
+              if (orphanCount > 2) {
+                issueBody += '2. **Repository Cleanup Needed:** Multiple orphaned files detected\n';
+                issueBody += '   - Run: `npm run cleanup:check`\n';
+                issueBody += '   - Review and remove orphaned files\n';
+                issueBody += '   - Update .gitignore if needed\n\n';
+              }
+
+              if (!validationOk) {
+                issueBody += '3. **Validation Tests Failing:** Critical pipeline issue\n';
+                issueBody += '   - Run: `npm run test:validation`\n';
+                issueBody += '   - Fix broken tests immediately\n';
+                issueBody += '   - Ensure all 4 tests pass\n\n';
+              }
+            } else if (successRate < 95 || orphanCount > 0) {
+              issueBody += '### 📋 Recommended Improvements\n\n';
+
+              if (successRate < 95) {
+                issueBody += '- Build success rate is good but below excellence threshold (95%)\n';
+                issueBody += '- Review recent failures for preventable issues\n\n';
+              }
+
+              if (orphanCount > 0) {
+                issueBody += '- Minor cleanup recommended\n';
+                issueBody += '- Run: `npm run cleanup:check`\n\n';
+              }
+            }
+
+            issueBody += '### 📊 Detailed Reports\n\n';
+            issueBody += 'View full analysis in [workflow run summary]';
+            issueBody += `(${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
+
+            issueBody += '### Next Steps\n\n';
+            issueBody += '- [ ] Review this monthly report\n';
+            issueBody += '- [ ] Address any action items above\n';
+            issueBody += '- [ ] Update quality gates policy if needed\n';
+            issueBody += '- [ ] Document learnings in team notes\n';
+            issueBody += '- [ ] Close this issue after review\n\n';
+
+            issueBody += '---\n\n';
+            issueBody += '**Related Documentation:**\n';
+            issueBody += '- [Quality Gates Policy](../blob/main/docs/quality-gates-policy.md)\n';
+            issueBody += '- [Monitoring Guide](../blob/main/docs/monitoring-guide.md)\n\n';
+            issueBody += '*This issue was automatically created by the Monthly Quality Deep Dive workflow.*';
+
+            // Create the issue
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `📊 Monthly Quality Review - ${month}`,
+              body: issueBody,
+              labels: ['monthly-review', 'quality', 'automated']
+            });
+
+            core.info(`Created monthly review issue #${issue.data.number}`);

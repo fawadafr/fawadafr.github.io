@@ -125,6 +125,28 @@ npm run cleanup:delete                # Remove orphaned files (destructive)
 - `Cmd+Shift+B` - Start Jekyll server
 - `Cmd+Shift+P` → "Run Task" → Select task
 
+### Automated Quality Workflows
+
+**Weekly Quality Maintenance:**
+- Runs automatically every Monday at 9:00 AM UTC
+- Checks build quality, orphaned files, validation tests
+- Creates GitHub issues when problems detected
+- Manual trigger: `gh workflow run weekly-quality-check.yml`
+
+**Monthly Quality Deep Dive:**
+- Runs first Monday of each month at 10:00 AM UTC
+- Comprehensive analysis of last 100 builds
+- Repository health and statistics
+- Creates monthly review issue with actionable recommendations
+
+**Benefits:**
+- Zero manual overhead (fully automated)
+- Proactive problem detection
+- Auto-created GitHub issues for tracking
+- No reliance on team remembering to run checks
+
+**See:** [Automated Workflows Documentation](.github/workflows/README.md) for details
+
 ### GitHub Pages Deployment
 The site automatically deploys via GitHub Actions when changes are pushed to the `main` branch. No manual build commands required.
 

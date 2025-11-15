@@ -1,0 +1,215 @@
+name: Weekly Quality Maintenance
+
+on:
+  # Run every Monday at 9:00 AM UTC
+  schedule:
+    - cron: '0 9 * * 1'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  quality-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          npm install
+          gem install classifier-reborn
+
+      - name: Build site
+        run: bundle exec jekyll build --lsi
+        env:
+          GITHUB_PAGES: true
+
+      - name: Run build quality report
+        id: quality_report
+        run: |
+          echo "## 📊 Build Quality Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run quality report and capture output
+          npm run build:report:detailed > quality-report.txt 2>&1 || true
+
+          # Add to step summary
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat quality-report.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          # Extract success rate
+          SUCCESS_RATE=$(grep "Success Rate:" quality-report.txt | grep -oE '[0-9]+\.[0-9]+' || echo "0")
+          echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
+
+          # Check if below threshold
+          if (( $(echo "$SUCCESS_RATE < 80" | bc -l) )); then
+            echo "quality_issue=true" >> $GITHUB_OUTPUT
+            echo "⚠️ **WARNING:** Success rate ($SUCCESS_RATE%) is below 80% threshold" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "quality_issue=false" >> $GITHUB_OUTPUT
+            echo "✅ Success rate ($SUCCESS_RATE%) meets quality standards" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Check for orphaned files
+        id: orphan_check
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧹 Orphaned Files Check" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run orphan detection
+          npm run cleanup:check > orphan-report.txt 2>&1 || true
+
+          # Add to step summary
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat orphan-report.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          # Check if orphans found
+          if grep -q "Total issues found:    0" orphan-report.txt; then
+            echo "orphans_found=false" >> $GITHUB_OUTPUT
+            echo "✅ No orphaned files detected" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "orphans_found=true" >> $GITHUB_OUTPUT
+            ORPHAN_COUNT=$(grep "Total issues found:" orphan-report.txt | grep -oE '[0-9]+$')
+            echo "⚠️ **WARNING:** $ORPHAN_COUNT orphaned file(s) detected" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Run validation test suite
+        id: validation_tests
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Validation Test Suite" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Run tests
+          if npm run test:validation > test-report.txt 2>&1; then
+            echo "tests_passed=true" >> $GITHUB_OUTPUT
+            echo "✅ All validation tests passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "tests_passed=false" >> $GITHUB_OUTPUT
+            echo "❌ **ERROR:** Validation tests failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          cat test-report.txt >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Create issue for quality problems
+        if: steps.quality_report.outputs.quality_issue == 'true' || steps.orphan_check.outputs.orphans_found == 'true' || steps.validation_tests.outputs.tests_passed == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const qualityIssue = '${{ steps.quality_report.outputs.quality_issue }}' === 'true';
+            const orphansFound = '${{ steps.orphan_check.outputs.orphans_found }}' === 'true';
+            const testsFailed = '${{ steps.validation_tests.outputs.tests_passed }}' === 'false';
+            const successRate = '${{ steps.quality_report.outputs.success_rate }}';
+
+            let issueBody = '## Weekly Quality Check Failed\n\n';
+            issueBody += `**Date:** ${new Date().toISOString().split('T')[0]}\n`;
+            issueBody += `**Workflow Run:** [#${{ github.run_number }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})\n\n`;
+
+            issueBody += '### Issues Detected\n\n';
+
+            if (qualityIssue) {
+              issueBody += `- ⚠️ **Build Quality Below Threshold:** ${successRate}% (target: ≥80%)\n`;
+            }
+
+            if (orphansFound) {
+              issueBody += '- ⚠️ **Orphaned Files Detected:** Repository contains orphaned or temporary files\n';
+            }
+
+            if (testsFailed) {
+              issueBody += '- ❌ **Validation Tests Failed:** One or more validation tests are failing\n';
+            }
+
+            issueBody += '\n### Required Actions\n\n';
+
+            if (qualityIssue) {
+              issueBody += '1. **Review Build Quality:**\n';
+              issueBody += '   ```bash\n   npm run build:report:detailed\n   ```\n';
+              issueBody += '   - Investigate recent failures\n';
+              issueBody += '   - Identify recurring error patterns\n';
+              issueBody += '   - Implement fixes or preventive measures\n\n';
+            }
+
+            if (orphansFound) {
+              issueBody += '2. **Clean Up Orphaned Files:**\n';
+              issueBody += '   ```bash\n   npm run cleanup:check      # Review orphaned files\n   npm run cleanup:delete     # Remove after verification\n   ```\n\n';
+            }
+
+            if (testsFailed) {
+              issueBody += '3. **Fix Validation Tests:**\n';
+              issueBody += '   ```bash\n   npm run test:validation\n   ```\n';
+              issueBody += '   - Review test failures\n';
+              issueBody += '   - Update validation rules if needed\n';
+              issueBody += '   - Ensure all 4 tests pass\n\n';
+            }
+
+            issueBody += '### Reference\n\n';
+            issueBody += '- [Quality Gates Policy](../blob/main/docs/quality-gates-policy.md)\n';
+            issueBody += '- [Monitoring Guide](../blob/main/docs/monitoring-guide.md)\n\n';
+            issueBody += '**This issue was automatically created by the Weekly Quality Maintenance workflow.**';
+
+            // Check if similar issue already exists
+            const existingIssues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'automated-quality-check',
+              per_page: 1
+            });
+
+            if (existingIssues.data.length > 0) {
+              // Update existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssues.data[0].number,
+                body: `## Update: ${new Date().toISOString().split('T')[0]}\n\n${issueBody}`
+              });
+
+              core.info(`Updated existing issue #${existingIssues.data[0].number}`);
+            } else {
+              // Create new issue
+              const issue = await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `⚠️ Weekly Quality Check Failed - ${new Date().toISOString().split('T')[0]}`,
+                body: issueBody,
+                labels: ['automated-quality-check', 'quality', 'maintenance']
+              });
+
+              core.info(`Created issue #${issue.data.number}`);
+            }
+
+      - name: Post success summary
+        if: steps.quality_report.outputs.quality_issue == 'false' && steps.orphan_check.outputs.orphans_found == 'false' && steps.validation_tests.outputs.tests_passed == 'true'
+        run: |
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "---" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ All Quality Checks Passed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Repository quality meets all standards:" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Build success rate ≥ 80%" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ No orphaned files" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All validation tests passing" >> $GITHUB_STEP_SUMMARY
