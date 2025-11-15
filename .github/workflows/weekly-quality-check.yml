@@ -60,7 +60,8 @@ jobs:
           echo "success_rate=$SUCCESS_RATE" >> $GITHUB_OUTPUT
 
           # Check if below threshold
-          if (( $(echo "$SUCCESS_RATE < 80" | bc -l) )); then
+          # TEMP: Set to -1 for testing success notifications
+          if (( $(echo "$SUCCESS_RATE < -1" | bc -l) )); then
             echo "quality_issue=true" >> $GITHUB_OUTPUT
             echo "⚠️ **WARNING:** Success rate ($SUCCESS_RATE%) is below 80% threshold" >> $GITHUB_STEP_SUMMARY
           else
