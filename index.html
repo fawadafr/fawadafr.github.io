@@ -1144,6 +1144,7 @@
       let searchData = [];
       let currentFocusIndex = -1;
       let searchTimeout = null;
+      let indexLoading = true;
 
       // Load search index
       async function loadSearchIndex() {
@@ -1163,15 +1164,31 @@
               this.add(doc);
             });
           });
+
+          indexLoading = false;
+          console.log('Search index loaded:', searchData.length, 'items');
         } catch (error) {
           console.error('Failed to load search index:', error);
+          indexLoading = false;
         }
       }
 
       // Perform search
       function performSearch(query) {
-        if (!searchIndex || query.length < 2) {
+        if (query.length < 2) {
           hideResults();
+          return;
+        }
+
+        if (indexLoading) {
+          searchResults.innerHTML = '<div class="search-loading">Loading search index...</div>';
+          searchResults.classList.add('active');
+          return;
+        }
+
+        if (!searchIndex) {
+          searchResults.innerHTML = '<div class="search-no-results">Search is not available</div>';
+          searchResults.classList.add('active');
           return;
         }
 
