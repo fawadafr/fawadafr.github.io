@@ -47,7 +47,7 @@
   <!-- RSS Feed Autodiscovery -->
   <link rel="alternate" type="application/atom+xml" title="Fawad Rashidi - RSS Feed" href="https://lab.fawad.ai/feed.xml">
 
-  <!-- Load custom CSS -->
+  <\!-- Load custom CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="/assets/main.css">
@@ -158,88 +158,102 @@
 
   <!-- MAIN CONTENT -->
   <main id="main-content" class="main-content">
+    <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
-    <!-- FEATURED CONTENT -->
-    <section class="section">
-      <h2 class="section-title">Featured Writing</h2>
-      <div class="content-grid">
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Platform Engineering Foundations: Building Developer Platforms That Scale</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2024-06-15T00:00:00-07:00" itemprop="datePublished">Jun 15, 2024
+      </time></p><div class="tag-list"><span class="tag">platform-engineering</span><span class="tag">devops</span><span class="tag">developer-experience</span><span class="tag">infrastructure</span></div></header>
 
-        <article class="content-card">
-          <span class="card-tag">#technical-leadership</span>
-          <h3 class="card-title">
-            <a href="/writing/platform-engineering-foundations/">Platform Engineering Foundations: Building Developer Platforms That Scale</a>
-          </h3>
-          <p class="card-excerpt">
-            Essential principles for creating internal developer platforms that accelerate engineering velocity and reduce cognitive load.
-          </p>
-          <div class="card-meta">
-            <span>Jun 15, 2024</span>
-            <span>5 min read</span>
-          </div>
-        </article>
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Platform engineering represents the evolution of DevOps, focusing on building
+self-service internal developer platforms that abstract infrastructure complexity.</p>
 
-        <article class="content-card">
-          <span class="card-tag">#engineering-culture</span>
-          <h3 class="card-title">
-            <a href="/writing/building-ownership-engineering-teams">Building a Culture of Ownership</a>
-          </h3>
-          <p class="card-excerpt">
-            Three practical strategies for empowering engineers to take true ownership without burning out.
-          </p>
-          <div class="card-meta">
-            <span>Nov 5, 2025</span>
-            <span>8 min read</span>
-          </div>
-        </article>
+<h2 id="core-principles">Core Principles</h2>
 
-        <article class="content-card">
-          <span class="card-tag">#case-study</span>
-          <h3 class="card-title">
-            <a href="/work/multi-region-platform">Building a Multi-Region Platform</a>
-          </h3>
-          <p class="card-excerpt">
-            How we scaled infrastructure across 5 regions while maintaining 99.99% uptime and cutting costs by 40%.
-          </p>
-          <div class="card-meta">
-            <span>Oct 28, 2025</span>
-            <span>15 min read</span>
-          </div>
-        </article>
+<ol>
+  <li><strong>Developer self-service</strong>: Enable teams to provision infrastructure without tickets</li>
+  <li><strong>Golden paths</strong>: Provide opinionated, secure, pre-approved workflows</li>
+  <li><strong>Platform as product</strong>: Treat internal platforms with product thinking</li>
+</ol>
 
-      </div>
-    </section>
+<h2 id="key-components">Key Components</h2>
 
-    <!-- CASE STUDY EXAMPLE -->
-    <section class="section">
-      <h2 class="section-title">Recent Work</h2>
+<ul>
+  <li><strong>Infrastructure as Code</strong>: Terraform, Pulumi, CloudFormation</li>
+  <li><strong>CI/CD pipelines</strong>: GitHub Actions, GitLab CI, CircleCI</li>
+  <li><strong>Observability</strong>: OpenTelemetry, Prometheus, Grafana</li>
+  <li><strong>Service catalogs</strong>: Backstage, Port, Internal developer portals</li>
+</ul>
 
-      <div class="case-study-card">
-        <div class="tag-list">
-          <span class="tag">#case-study</span>
-          <span class="tag">#cloud-architecture</span>
-          <span class="tag">#platform-engineering</span>
+<p>Platform engineering reduces time-to-production while maintaining governance and security.</p>
+
+  </div>
+
+<section class="related-posts">
+  <h3>Related Articles</h3>
+  <div class="related-grid">
+
+    <article class="related-post">
+      <h4><a href="/writing/scaling-engineering-culture/" data-event="related-post-click" data-post-title="Scaling Engineering Culture: From Startup to Enterprise">Scaling Engineering Culture: From Startup to Enterprise</a></h4>
+
+        <p class="excerpt">How to maintain engineering velocity and culture while growing from 10 to 500+ engineers.</p>
+
+
+        <div class="post-tags">
+
+            <span class="tag">culture</span>
+
+            <span class="tag">scaling</span>
+
+            <span class="tag">leadership</span>
+
         </div>
-        <h3 class="case-study-title">Zero-Downtime Migration to Cloud-Native Architecture</h3>
-        <p class="case-study-description">
-          Led the technical strategy and execution for migrating a monolithic application to microservices,
-          serving 10M+ daily active users without a single minute of downtime.
-        </p>
-        <a href="/work/cloud-native-migration" class="case-study-link">View Case Study</a>
-      </div>
 
-      <div class="case-study-card">
-        <div class="tag-list">
-          <span class="tag">#case-study</span>
-          <span class="tag">#developer-experience</span>
+    </article>
+
+    <article class="related-post">
+      <h4><a href="/writing/leading-with-intelligent-trust/" data-event="related-post-click" data-post-title="Leading with Intelligent Trust in AI-Driven Enterprises">Leading with Intelligent Trust in AI-Driven Enterprises</a></h4>
+
+        <p class="excerpt">How boards and executives can unlock innovation while safeguarding ethics</p>
+
+
+        <div class="post-tags">
+
+            <span class="tag">leadership</span>
+
+            <span class="tag">ai</span>
+
+            <span class="tag">governance</span>
+
         </div>
-        <h3 class="case-study-title">Internal Developer Platform: From 6 Hours to 6 Minutes</h3>
-        <p class="case-study-description">
-          Built a self-service platform that reduced deployment time from 6 hours to 6 minutes,
-          enabling teams to ship 10x more frequently.
-        </p>
-        <a href="/work/developer-platform" class="case-study-link">View Case Study</a>
-      </div>
-    </section>
+
+    </article>
+
+    <article class="related-post">
+      <h4><a href="/writing/designing-resilient-operating-models/" data-event="related-post-click" data-post-title="Designing Operating Models for Volatile Markets">Designing Operating Models for Volatile Markets</a></h4>
+
+        <p class="excerpt">Three plays for sustaining performance when disruption is constant</p>
+
+
+        <div class="post-tags">
+
+            <span class="tag">strategy</span>
+
+            <span class="tag">resilience</span>
+
+            <span class="tag">leadership</span>
+
+        </div>
+
+    </article>
+
+  </div>
+</section>
+
+<a class="u-url" href="/writing/platform-engineering-foundations/" hidden></a>
+</article>
 
   </main>
 
