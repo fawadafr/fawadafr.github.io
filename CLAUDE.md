@@ -10,6 +10,7 @@ This file provides a quick reference for development. For comprehensive document
 - **[Customization Guide](docs/customization-guide.md)** - Design system, CSS architecture, styling, and theming
 - **[PRD Implementation Report](docs/prd-implementation-report.md)** - Feature implementation status and technical details
 - **[Editorial Calendar](docs/editorial-calendar.md)** - Content planning and publishing schedule
+- **[CHANGELOG](CHANGELOG.md)** - Development feature changelog and version history
 
 ## Project Overview
 
