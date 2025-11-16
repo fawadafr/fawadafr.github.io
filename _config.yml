@@ -1,30 +1,44 @@
-# Site Settings
-title: "Fawad Rashidi"
-email: fawad@lab.fawad.ai
-description: >-
-  CTO with 15+ years shipping distributed systems at scale.
-  Building resilient systems and high-performing engineering teams.
-twitter_username: fawadafr
-github_username: fawadafr
-minimal_mistakes_skin: contrast  # Professional blue theme
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+title: MM
+email:
+description: >- # this means to ignore newlines until "baseurl:"
+  Write an awesome description for your new site here. You can edit this
+  line in _config.yml. It will appear in your document head meta (for
+  Google search results) and in your feed.xml site description.
+twitter_username: username
+github_username: username
+minimal_mistakes_skin: default
 search: true
 
 # Build settings
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes
+# Outputting
 permalink: /:categories/:title/
-paginate: 5
+paginate: 5 # amount of posts to show
 paginate_path: /page:num/
-timezone: America/Los_Angeles
+timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
-# Site URL
-url: "https://lab.fawad.ai"
-baseurl: ""
-
-# Include/Exclude
 include:
   - _pages
 
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -34,19 +48,18 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - docs/
+  - _drafts/
+  - _case_studies/
+  - _speaking/
   - scripts/
   - .bundle/
-  - .github/
-  - .husky/
   - package.json
   - package-lock.json
   - README.md
   - CLAUDE.md
   - CHANGELOG.md
-  - _backup/
-  - _drafts/
 
-# Plugins
+# Plugins (previously gems:)
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
@@ -54,35 +67,36 @@ plugins:
   - jekyll-feed
   - jekyll-include-cache
 
-# Publishing controls
-future: false  # Don't publish posts with future dates
-
-# Author
 author:
-  name: "Fawad Rashidi"
-  avatar: "/assets/images/avatar.jpg"
-  bio: "Chief Technology Officer • Platform Engineering • Cloud Architecture • Engineering Culture"
-  location: "San Francisco, CA"
-  email: "fawad@lab.fawad.ai"
+  name   : "First Lastname"
+  avatar : "/assets/images/bio-photo.jpg"
+  bio    : "My awesome biography constrained to a sentence or two goes here."
   links:
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/fawadafr"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/fawadafr"
+      url: "https://github.com/"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/"
 
-# Footer
 footer:
   links:
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/in/fawadafr"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/"
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://github.com/fawadafr"
+      url: "https://github.com/"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://instagram.com/"
 
-# Defaults
 defaults:
   # _posts
   - scope:
@@ -92,7 +106,7 @@ defaults:
       layout: single
       author_profile: true
       read_time: true
-      comments: false
+      comments: true
       share: true
       related: true
   # _pages
@@ -103,7 +117,6 @@ defaults:
       layout: single
       author_profile: true
 
-# Category & Tag Archives
 category_archive:
   type: liquid
   path: /categories/
