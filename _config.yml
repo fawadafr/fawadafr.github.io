@@ -1,102 +1,112 @@
+# Site Settings
 title: "Fawad Rashidi"
-tagline: "Chief Technology Officer"
+email: fawad@lab.fawad.ai
 description: >-
-  Building resilient systems and high-performing engineering teams.
   CTO with 15+ years shipping distributed systems at scale.
+  Building resilient systems and high-performing engineering teams.
+twitter_username: fawadafr
+github_username: fawadafr
+minimal_mistakes_skin: contrast  # Professional blue theme
+search: true
+
+# Build settings
+markdown: kramdown
+remote_theme: mmistakes/minimal-mistakes
+permalink: /:categories/:title/
+paginate: 5
+paginate_path: /page:num/
+timezone: America/Los_Angeles
+
+# Site URL
 url: "https://lab.fawad.ai"
 baseurl: ""
 
-# Include search.json in build
+# Include/Exclude
 include:
-  - search.json
+  - _pages
 
-# Exclude docs and includes from Jekyll processing
 exclude:
-  - docs/
-  - _includes/analytics.html
-  - README.md
   - Gemfile
   - Gemfile.lock
-  - vendor/
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - docs/
+  - scripts/
   - .bundle/
-  - node_modules/
+  - .github/
+  - .husky/
   - package.json
   - package-lock.json
-  - scripts/
+  - README.md
+  - CLAUDE.md
+  - CHANGELOG.md
+  - _backup/
+  - _drafts/
 
-# Theme & appearance
-remote_theme: jekyll/minima
+# Plugins
 plugins:
-  - jekyll-seo-tag
+  - jekyll-paginate
   - jekyll-sitemap
-  - jekyll-paginate-v2
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
 
 # Publishing controls
 future: false  # Don't publish posts with future dates
 
-# Related posts configuration
-lsi: true  # Enable Latent Semantic Indexing for smarter related posts
-related_posts_count: 3  # Number of related posts to show
-
-# Pagination configuration (jekyll-paginate-v2)
-pagination:
-  enabled: true
-  per_page: 10
-  permalink: '/page/:num/'
-  title: ':title - Page :num'
-  limit: 0
-  sort_field: 'date'
-  sort_reverse: true
-
-minima:
-  skin: classic
-  social_links:
-    - platform: linkedin
-      user_url: https://www.linkedin.com/in/johndoe
-    - platform: github
-      user_url: https://github.com/johndoe
-    - platform: twitter
-      user_url: https://twitter.com/johndoe
-
+# Author
 author:
   name: "Fawad Rashidi"
-  email: "fawad@lab.fawad.ai"
+  avatar: "/assets/images/avatar.jpg"
+  bio: "Chief Technology Officer • Platform Engineering • Cloud Architecture • Engineering Culture"
   location: "San Francisco, CA"
-  role: "Chief Technology Officer"
-  tagline: "Platform Engineering • Cloud Architecture • Engineering Culture"
+  email: "fawad@lab.fawad.ai"
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/fawadafr"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/fawadafr"
 
-# Navigation
-header_pages:
-  - work.md
-  - blog/index.html
-  - speaking.md
-  - tags.md
-  - about.md
+# Footer
+footer:
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/fawadafr"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/fawadafr"
 
-# Collections
-collections:
-  case_studies:
-    output: true
-    permalink: /work/:slug/
-  speaking:
-    output: true
-    permalink: /speaking/:slug/
-
-# Defaults for front matter
+# Defaults
 defaults:
+  # _posts
   - scope:
       path: ""
-      type: "posts"
+      type: posts
     values:
-      layout: "post"
-      permalink: /writing/:slug/
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: false
+      share: true
+      related: true
+  # _pages
   - scope:
-      path: ""
-      type: "case_studies"
+      path: "_pages"
+      type: pages
     values:
-      layout: "case-study"
-  - scope:
-      path: ""
-      type: "speaking"
-    values:
-      layout: "speaking"
+      layout: single
+      author_profile: true
+
+# Category & Tag Archives
+category_archive:
+  type: liquid
+  path: /categories/
+tag_archive:
+  type: liquid
+  path: /tags/
